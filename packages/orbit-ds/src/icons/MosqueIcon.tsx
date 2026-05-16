@@ -1,0 +1,202 @@
+import * as React from "react";
+
+import type { IconProps } from "./types";
+
+export function MosqueIcon({
+  variant = "regular",
+  size = 24,
+  ...props
+}: IconProps) {
+  switch (variant) {
+    case "regular":
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          {...props}
+        >
+          <rect width={256} height={256} fill="none" />
+          <line
+            x1={208}
+            y1={128}
+            x2={48}
+            y2={128}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <path
+            d="M208,152a16,16,0,0,1,16-16h0a16,16,0,0,1,16,16v56H208"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <path
+            d="M48,208H16V152a16,16,0,0,1,16-16h0a16,16,0,0,1,16,16"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <path
+            d="M48,208V128c0-64,80-72,80-104,0,32,80,40,80,104v80H176V176a16,16,0,0,0-16-16h0a16,16,0,0,0-16,16v32H112V176a16,16,0,0,0-16-16h0a16,16,0,0,0-16,16v32Z"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+        </svg>
+      );
+
+    case "fill":
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          {...props}
+        >
+          <rect width={256} height={256} fill="none" />
+          <path d="M224,128a23.84,23.84,0,0,0-8,1.38V128c0-41.78-31.07-62.46-53.76-77.56C148.16,41.06,136,33,136,24a8,8,0,0,0-16,0c0,9-12.16,17.06-26.24,26.44C71.07,65.54,40,86.22,40,128v1.38A24,24,0,0,0,8,152v56a8,8,0,0,0,8,8H72a8,8,0,0,0,8-8V176a16,16,0,0,1,32,0v32a8,8,0,0,0,8,8h16a8,8,0,0,0,8-8V176a16,16,0,0,1,32,0v32a8,8,0,0,0,8,8h56a8,8,0,0,0,8-8V152A24,24,0,0,0,224,128ZM40,200H24V152a8,8,0,0,1,16,0Zm192,0H216V152a8,8,0,0,1,16,0Z" />
+        </svg>
+      );
+
+    case "bold":
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          {...props}
+        >
+          <rect width={256} height={256} fill="none" />
+          <line
+            x1={200}
+            y1={128}
+            x2={56}
+            y2={128}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+          <path
+            d="M200,156a20,20,0,0,1,20-20h0a20,20,0,0,1,20,20v52H200"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+          <path
+            d="M56,208H16V156a20,20,0,0,1,20-20h0a20,20,0,0,1,20,20"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+          <path
+            d="M56,208V128c0-64,72-72,72-104,0,32,72,40,72,104v80Z"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+          <line
+            x1={104}
+            y1={208}
+            x2={104}
+            y2={168}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+          <line
+            x1={152}
+            y1={208}
+            x2={152}
+            y2={168}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+        </svg>
+      );
+
+    case "duotone":
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          {...props}
+        >
+          <rect width={256} height={256} fill="none" />
+          <path
+            d="M48,128c0-64,80-72,80-104,0,32,80,40,80,104Z"
+            opacity={0.2}
+          />
+          <path
+            d="M208,152a16,16,0,0,1,16-16h0a16,16,0,0,1,16,16v56H208"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <path
+            d="M48,208H16V152a16,16,0,0,1,16-16h0a16,16,0,0,1,16,16"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={208}
+            y1={128}
+            x2={48}
+            y2={128}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <path
+            d="M48,208V128c0-64,80-72,80-104,0,32,80,40,80,104v80H176V176a16,16,0,0,0-16-16h0a16,16,0,0,0-16,16v32H112V176a16,16,0,0,0-16-16h0a16,16,0,0,0-16,16v32Z"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+        </svg>
+      );
+
+    default:
+      return null;
+  }
+}

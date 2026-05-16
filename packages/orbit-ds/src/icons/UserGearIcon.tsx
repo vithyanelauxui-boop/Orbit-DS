@@ -1,0 +1,333 @@
+import * as React from "react";
+
+import type { IconProps } from "./types";
+
+export function UserGearIcon({
+  variant = "regular",
+  size = 24,
+  ...props
+}: IconProps) {
+  switch (variant) {
+    case "regular":
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          {...props}
+        >
+          <rect width={256} height={256} fill="none" />
+          <circle
+            cx={108}
+            cy={100}
+            r={60}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <path
+            d="M24,200c20.55-24.45,49.56-40,84-40s63.45,15.55,84,40"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <circle
+            cx={224}
+            cy={136}
+            r={16}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={224}
+            y1={120}
+            x2={224}
+            y2={108}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={210.14}
+            y1={128}
+            x2={199.75}
+            y2={122}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={210.14}
+            y1={144}
+            x2={199.75}
+            y2={150}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={224}
+            y1={152}
+            x2={224}
+            y2={164}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={237.86}
+            y1={144}
+            x2={248.25}
+            y2={150}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={237.86}
+            y1={128}
+            x2={248.25}
+            y2={122}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+        </svg>
+      );
+
+    case "fill":
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          {...props}
+        >
+          <rect width={256} height={256} fill="none" />
+          <path d="M198.13,194.85A8,8,0,0,1,192,208H24a8,8,0,0,1-6.12-13.15c14.94-17.78,33.52-30.41,54.17-37.17a68,68,0,1,1,71.9,0C164.6,164.44,183.18,177.07,198.13,194.85ZM255.18,154a8,8,0,0,1-6.94,4,7.92,7.92,0,0,1-4-1.07l-4.67-2.7a23.92,23.92,0,0,1-7.58,4.39V164a8,8,0,0,1-16,0v-5.38a23.92,23.92,0,0,1-7.58-4.39l-4.67,2.7a7.92,7.92,0,0,1-4,1.07,8,8,0,0,1-4-14.93l4.66-2.69a23.6,23.6,0,0,1,0-8.76l-4.66-2.69a8,8,0,1,1,8-13.86l4.67,2.7a23.92,23.92,0,0,1,7.58-4.39V108a8,8,0,0,1,16,0v5.38a23.92,23.92,0,0,1,7.58,4.39l4.67-2.7a8,8,0,1,1,8,13.86l-4.66,2.69a23.6,23.6,0,0,1,0,8.76l4.66,2.69A8,8,0,0,1,255.18,154ZM224,144a8,8,0,1,0-8-8A8,8,0,0,0,224,144Z" />
+        </svg>
+      );
+
+    case "bold":
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          {...props}
+        >
+          <rect width={256} height={256} fill="none" />
+          <circle
+            cx={104}
+            cy={100}
+            r={60}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+          <path
+            d="M20,200c20.55-24.45,49.56-40,84-40s63.45,15.55,84,40"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+          <line
+            x1={220}
+            y1={136}
+            x2={220}
+            y2={112}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+          <line
+            x1={220}
+            y1={136}
+            x2={197.17}
+            y2={128.58}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+          <line
+            x1={220}
+            y1={136}
+            x2={205.89}
+            y2={155.42}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+          <line
+            x1={220}
+            y1={136}
+            x2={234.11}
+            y2={155.42}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+          <line
+            x1={220}
+            y1={136}
+            x2={242.83}
+            y2={128.58}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+        </svg>
+      );
+
+    case "duotone":
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          {...props}
+        >
+          <rect width={256} height={256} fill="none" />
+          <circle cx={108} cy={100} r={60} opacity={0.2} />
+          <circle
+            cx={108}
+            cy={100}
+            r={60}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <path
+            d="M24,200c20.55-24.45,49.56-40,84-40s63.45,15.55,84,40"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <circle
+            cx={224}
+            cy={136}
+            r={16}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={224}
+            y1={120}
+            x2={224}
+            y2={108}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={210.14}
+            y1={128}
+            x2={199.75}
+            y2={122}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={210.14}
+            y1={144}
+            x2={199.75}
+            y2={150}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={224}
+            y1={152}
+            x2={224}
+            y2={164}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={237.86}
+            y1={144}
+            x2={248.25}
+            y2={150}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={237.86}
+            y1={128}
+            x2={248.25}
+            y2={122}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+        </svg>
+      );
+
+    default:
+      return null;
+  }
+}

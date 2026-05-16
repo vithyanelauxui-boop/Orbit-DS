@@ -1,0 +1,343 @@
+import * as React from "react";
+
+import type { IconProps } from "./types";
+
+export function NetworkXIcon({
+  variant = "regular",
+  size = 24,
+  ...props
+}: IconProps) {
+  switch (variant) {
+    case "regular":
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          {...props}
+        >
+          <rect width={256} height={256} fill="none" />
+          <rect
+            x={104}
+            y={32}
+            width={48}
+            height={48}
+            rx={8}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <rect
+            x={40}
+            y={168}
+            width={48}
+            height={48}
+            rx={8}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={128}
+            y1={80}
+            x2={128}
+            y2={120}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={64}
+            y1={168}
+            x2={64}
+            y2={120}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={192}
+            y1={144}
+            x2={192}
+            y2={120}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={24}
+            y1={120}
+            x2={232}
+            y2={120}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={168}
+            y1={168}
+            x2={216}
+            y2={216}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={216}
+            y1={168}
+            x2={168}
+            y2={216}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+        </svg>
+      );
+
+    case "fill":
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          {...props}
+        >
+          <rect width={256} height={256} fill="none" />
+          <path d="M240,120a8,8,0,0,1-8,8H200v16a8,8,0,0,1-16,0V128H72v32h8a16,16,0,0,1,16,16v32a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V176a16,16,0,0,1,16-16h8V128H24a8,8,0,0,1,0-16h96V88h-8A16,16,0,0,1,96,72V40a16,16,0,0,1,16-16h32a16,16,0,0,1,16,16V72a16,16,0,0,1-16,16h-8v24h96A8,8,0,0,1,240,120Zm-18.34,42.34a8,8,0,0,0-11.32,0L192,180.69l-18.34-18.35a8,8,0,0,0-11.32,11.32L180.69,192l-18.35,18.34a8,8,0,0,0,11.32,11.32L192,203.31l18.34,18.35a8,8,0,0,0,11.32-11.32L203.31,192l18.35-18.34A8,8,0,0,0,221.66,162.34Z" />
+        </svg>
+      );
+
+    case "bold":
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          {...props}
+        >
+          <rect width={256} height={256} fill="none" />
+          <rect
+            x={104}
+            y={32}
+            width={48}
+            height={48}
+            rx={8}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+          <rect
+            x={40}
+            y={168}
+            width={48}
+            height={48}
+            rx={8}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+          <line
+            x1={128}
+            y1={80}
+            x2={128}
+            y2={120}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+          <line
+            x1={64}
+            y1={168}
+            x2={64}
+            y2={120}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+          <line
+            x1={192}
+            y1={140}
+            x2={192}
+            y2={120}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+          <line
+            x1={24}
+            y1={120}
+            x2={232}
+            y2={120}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+          <line
+            x1={168}
+            y1={168}
+            x2={216}
+            y2={216}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+          <line
+            x1={216}
+            y1={168}
+            x2={168}
+            y2={216}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+        </svg>
+      );
+
+    case "duotone":
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          {...props}
+        >
+          <rect width={256} height={256} fill="none" />
+          <rect x={104} y={32} width={48} height={48} rx={8} opacity={0.2} />
+          <rect x={40} y={168} width={48} height={48} rx={8} opacity={0.2} />
+          <rect
+            x={104}
+            y={32}
+            width={48}
+            height={48}
+            rx={8}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <rect
+            x={40}
+            y={168}
+            width={48}
+            height={48}
+            rx={8}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={128}
+            y1={80}
+            x2={128}
+            y2={120}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={64}
+            y1={168}
+            x2={64}
+            y2={120}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={192}
+            y1={144}
+            x2={192}
+            y2={120}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={24}
+            y1={120}
+            x2={232}
+            y2={120}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={168}
+            y1={168}
+            x2={216}
+            y2={216}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={216}
+            y1={168}
+            x2={168}
+            y2={216}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+        </svg>
+      );
+
+    default:
+      return null;
+  }
+}

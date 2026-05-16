@@ -1,0 +1,186 @@
+import * as React from "react";
+
+import type { IconProps } from "./types";
+
+export function NotionLogoIcon({
+  variant = "regular",
+  size = 24,
+  ...props
+}: IconProps) {
+  switch (variant) {
+    case "regular":
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          {...props}
+        >
+          <rect width={256} height={256} fill="none" />
+          <polyline
+            points="40 48 64 48 152 208 192 208 192 48"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={40}
+            y1={208}
+            x2={88}
+            y2={208}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={168}
+            y1={48}
+            x2={216}
+            y2={48}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <polyline
+            points="192 208 104 48 64 48 64 208"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+        </svg>
+      );
+
+    case "fill":
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          {...props}
+        >
+          <rect width={256} height={256} fill="none" />
+          <path d="M224,48a8,8,0,0,1-8,8H200V208a8,8,0,0,1-8,8H152a8,8,0,0,1-7-4.14L72,79.15V200H88a8,8,0,0,1,0,16H40a8,8,0,0,1,0-16H56V56H40a8,8,0,0,1,0-16h64a8,8,0,0,1,7,4.14l73,132.71V56H168a8,8,0,0,1,0-16h48A8,8,0,0,1,224,48Z" />
+        </svg>
+      );
+
+    case "bold":
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          {...props}
+        >
+          <rect width={256} height={256} fill="none" />
+          <polyline
+            points="40 48 60 48 148 208 196 208 196 48"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+          <line
+            x1={40}
+            y1={208}
+            x2={80}
+            y2={208}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+          <line
+            x1={176}
+            y1={48}
+            x2={216}
+            y2={48}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+          <polyline
+            points="196 208 108 48 60 48 60 208"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+        </svg>
+      );
+
+    case "duotone":
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          {...props}
+        >
+          <rect width={256} height={256} fill="none" />
+          <polygon points="64 48 152 208 192 208 104 48 64 48" opacity={0.2} />
+          <polyline
+            points="40 48 64 48 152 208 192 208 192 48"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={40}
+            y1={208}
+            x2={88}
+            y2={208}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={168}
+            y1={48}
+            x2={216}
+            y2={48}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <polyline
+            points="192 208 104 48 64 48 64 208"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+        </svg>
+      );
+
+    default:
+      return null;
+  }
+}

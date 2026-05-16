@@ -1,0 +1,223 @@
+import * as React from "react";
+
+import type { IconProps } from "./types";
+
+export function CraneTowerIcon({
+  variant = "regular",
+  size = 24,
+  ...props
+}: IconProps) {
+  switch (variant) {
+    case "regular":
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          {...props}
+        >
+          <rect width={256} height={256} fill="none" />
+          <line
+            x1={24}
+            y1={216}
+            x2={128}
+            y2={216}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={24}
+            y1={88}
+            x2={240}
+            y2={88}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={48}
+            y1={152}
+            x2={104}
+            y2={152}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <path
+            d="M216,88v96a8,8,0,0,1-8,8H192a8,8,0,0,1-8-8v-8"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <polyline
+            points="48 216 48 40 80 40 104 88 104 216"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+        </svg>
+      );
+
+    case "fill":
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          {...props}
+        >
+          <rect width={256} height={256} fill="none" />
+          <path d="M127.73,208H112V164a4,4,0,0,0-4-4H44a4,4,0,0,0-4,4v44H24.27A8.17,8.17,0,0,0,16,215.47,8,8,0,0,0,24,224H128a8,8,0,0,0,8-8.53A8.17,8.17,0,0,0,127.73,208Z" />
+          <path d="M239.73,80H108.94L87.16,36.42A8,8,0,0,0,80,32H48a8,8,0,0,0-8,8V80H24.27A8.17,8.17,0,0,0,16,87.47,8,8,0,0,0,24,96H40v44a4,4,0,0,0,4,4h64a4,4,0,0,0,4-4V96h96v88H192v-7.73a8.18,8.18,0,0,0-7.47-8.25,8,8,0,0,0-8.53,8v8a16,16,0,0,0,16,16h16a16,16,0,0,0,16-16V96h16a8,8,0,0,0,8-8.53A8.17,8.17,0,0,0,239.73,80ZM56,80V48H75.06l16,32Z" />
+        </svg>
+      );
+
+    case "bold":
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          {...props}
+        >
+          <rect width={256} height={256} fill="none" />
+          <line
+            x1={24}
+            y1={216}
+            x2={128}
+            y2={216}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+          <line
+            x1={24}
+            y1={88}
+            x2={240}
+            y2={88}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+          <line
+            x1={48}
+            y1={152}
+            x2={104}
+            y2={152}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+          <path
+            d="M216,88v96a8,8,0,0,1-8,8H188a8,8,0,0,1-8-8v-8"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+          <polyline
+            points="48 216 48 40 80 40 104 88 104 216"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={24}
+          />
+        </svg>
+      );
+
+    case "duotone":
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          {...props}
+        >
+          <rect width={256} height={256} fill="none" />
+          <polygon
+            points="48 216 48 40 80 40 104 88 104 216 48 216"
+            opacity={0.2}
+          />
+          <line
+            x1={24}
+            y1={216}
+            x2={128}
+            y2={216}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={24}
+            y1={88}
+            x2={240}
+            y2={88}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <line
+            x1={48}
+            y1={152}
+            x2={104}
+            y2={152}
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <path
+            d="M216,88v96a8,8,0,0,1-8,8H192a8,8,0,0,1-8-8v-8"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+          <polyline
+            points="48 216 48 40 80 40 104 88 104 216"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={16}
+          />
+        </svg>
+      );
+
+    default:
+      return null;
+  }
+}

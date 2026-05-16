@@ -1,0 +1,105 @@
+import * as React from "react";
+
+import type { IconProps } from "./types";
+
+export function NumpadIcon({
+  variant = "regular",
+  size = 24,
+  ...props
+}: IconProps) {
+  switch (variant) {
+    case "regular":
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          {...props}
+        >
+          <rect width={256} height={256} fill="none" />
+          <circle cx={64} cy={48} r={16} />
+          <circle cx={128} cy={48} r={16} />
+          <circle cx={192} cy={48} r={16} />
+          <circle cx={64} cy={104} r={16} />
+          <circle cx={128} cy={104} r={16} />
+          <circle cx={192} cy={104} r={16} />
+          <circle cx={64} cy={160} r={16} />
+          <circle cx={128} cy={160} r={16} />
+          <circle cx={128} cy={216} r={16} />
+          <circle cx={192} cy={160} r={16} />
+        </svg>
+      );
+
+    case "fill":
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          {...props}
+        >
+          <rect width={256} height={256} fill="none" />
+          <path d="M200,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V40A16,16,0,0,0,200,24ZM80,164a12,12,0,1,1,12-12A12,12,0,0,1,80,164Zm0-40a12,12,0,1,1,12-12A12,12,0,0,1,80,124Zm0-40A12,12,0,1,1,92,72,12,12,0,0,1,80,84Zm48,120a12,12,0,1,1,12-12A12,12,0,0,1,128,204Zm0-40a12,12,0,1,1,12-12A12,12,0,0,1,128,164Zm0-40a12,12,0,1,1,12-12A12,12,0,0,1,128,124Zm0-40a12,12,0,1,1,12-12A12,12,0,0,1,128,84Zm48,80a12,12,0,1,1,12-12A12,12,0,0,1,176,164Zm0-40a12,12,0,1,1,12-12A12,12,0,0,1,176,124Zm0-40a12,12,0,1,1,12-12A12,12,0,0,1,176,84Z" />
+        </svg>
+      );
+
+    case "bold":
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          {...props}
+        >
+          <rect width={256} height={256} fill="none" />
+          <circle cx={64} cy={48} r={20} />
+          <circle cx={128} cy={48} r={20} />
+          <circle cx={192} cy={48} r={20} />
+          <circle cx={64} cy={104} r={20} />
+          <circle cx={128} cy={104} r={20} />
+          <circle cx={192} cy={104} r={20} />
+          <circle cx={64} cy={160} r={20} />
+          <circle cx={128} cy={160} r={20} />
+          <circle cx={128} cy={216} r={20} />
+          <circle cx={192} cy={160} r={20} />
+        </svg>
+      );
+
+    case "duotone":
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          {...props}
+        >
+          <rect width={256} height={256} fill="none" />
+          <path
+            d="M64,48H192a0,0,0,0,1,0,0V200a16,16,0,0,1-16,16H80a16,16,0,0,1-16-16V48A0,0,0,0,1,64,48Z"
+            opacity={0.2}
+          />
+          <circle cx={64} cy={48} r={16} />
+          <circle cx={128} cy={48} r={16} />
+          <circle cx={192} cy={48} r={16} />
+          <circle cx={64} cy={104} r={16} />
+          <circle cx={128} cy={104} r={16} />
+          <circle cx={192} cy={104} r={16} />
+          <circle cx={64} cy={160} r={16} />
+          <circle cx={128} cy={160} r={16} />
+          <circle cx={128} cy={216} r={16} />
+          <circle cx={192} cy={160} r={16} />
+        </svg>
+      );
+
+    default:
+      return null;
+  }
+}

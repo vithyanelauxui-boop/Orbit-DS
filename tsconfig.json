@@ -20,7 +20,10 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./packages/orbit-ds/src*"],
+      "@orbit-ds": [
+        "./packages/orbit-ds/src/index.ts"
+      ]
     }
   },
   "include": [

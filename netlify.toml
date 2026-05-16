@@ -1,0 +1,9 @@
+[build]
+  command = "npm run build-storybook"
+  publish = "storybook-static"
+
+# If the plugin was explicitly listed, remove it. 
+# If Netlify is forcing it, you can sometimes bypass it by explicitly 
+# declaring an empty plugins list or ensuring no next plugins are attached.
+[[plugins]]
+  package = "@netlify/plugin-local-install-core" # Or just ensure [[plugins]] for nextjs is deleted

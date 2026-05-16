@@ -59,6 +59,13 @@ const people = [
   { name: "Nora Diaz", src: avatarSvg("Nora Diaz", "#ea580c") },
 ] as const
 
+const avatarVariants = ["basic", "badge", "badge-with-button"] as const
+const groupVariants = ["group", "group-with-icon"] as const
+const allAvatarVariants = [
+  ...avatarVariants,
+  ...groupVariants,
+] as const
+
 function PersonAvatar({
   name,
   src,
@@ -76,9 +83,89 @@ function PersonAvatar({
   )
 }
 
+type AvatarStoryArgs = {
+  variant?: (typeof allAvatarVariants)[number]
+  size?: "sm" | "default" | "lg"
+}
+
+type GroupAvatarStoryArgs = {
+  variant?: (typeof groupVariants)[number]
+  size?: "sm" | "default" | "lg"
+}
+
+function StandaloneAvatarPreview({
+  variant = "basic",
+  size = "default",
+}: AvatarStoryArgs) {
+  if (variant === "badge") {
+    return (
+      <Avatar size={size}>
+        <AvatarImage src={people[0].src} alt={people[0].name} />
+        <AvatarFallback>AP</AvatarFallback>
+        <AvatarBadge aria-label="Online">
+          <CheckIcon weight="bold" />
+        </AvatarBadge>
+      </Avatar>
+    )
+  }
+
+  if (variant === "badge-with-button") {
+    return (
+      <div className="relative w-fit">
+        <Avatar size={size}>
+          <AvatarImage src={people[1].src} alt={people[1].name} />
+          <AvatarFallback>MC</AvatarFallback>
+        </Avatar>
+        <Button
+          size="icon-xs"
+          className="absolute right-0 bottom-0 rounded-full"
+          aria-label="Edit avatar"
+        >
+          <CameraIcon />
+        </Button>
+      </div>
+    )
+  }
+
+  return (
+    <PersonAvatar
+      name={people[0].name}
+      src={people[0].src}
+      size={size}
+    />
+  )
+}
+
+function AvatarGroupPreview({
+  variant = "group",
+  size = "default",
+}: GroupAvatarStoryArgs) {
+  return (
+    <AvatarGroup>
+      {variant === "group-with-icon" ? (
+        <Avatar size={size} className="bg-muted text-muted-foreground">
+          <AvatarFallback>
+            <UserPlusIcon />
+          </AvatarFallback>
+        </Avatar>
+      ) : null}
+      {people
+        .slice(variant === "group-with-icon" ? 1 : 0, 3)
+        .map((person) => (
+          <PersonAvatar
+            key={person.name}
+            name={person.name}
+            src={person.src}
+            size={size}
+          />
+        ))}
+    </AvatarGroup>
+  )
+}
+
 const meta = {
   title: "Orbit DS/Avatar",
-  component: Avatar,
+  component: StandaloneAvatarPreview,
   subcomponents: {
     AvatarImage,
     AvatarFallback,
@@ -90,55 +177,36 @@ const meta = {
     layout: "padded",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof Avatar>
+  argTypes: {
+    size: {
+      control: "inline-radio",
+      options: sizes,
+      description: "Controls the avatar size in the preview stories.",
+    },
+    variant: {
+      control: "select",
+      description: "Switches between the combined avatar examples.",
+    },
+  },
+} satisfies Meta<AvatarStoryArgs>
 
 export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Basic: Story = {
-  render: () => <PersonAvatar name={people[0].name} src={people[0].src} />,
-}
-
-export const Badge: Story = {
-  render: () => (
-    <Avatar>
-      <AvatarImage src={people[0].src} alt={people[0].name} />
-      <AvatarFallback>AP</AvatarFallback>
-      <AvatarBadge aria-label="Online">
-        <CheckIcon weight="bold" />
-      </AvatarBadge>
-    </Avatar>
-  ),
-}
-
-export const BadgeWithButton: Story = {
-  render: () => (
-    <div className="relative w-fit">
-      <Avatar size="lg">
-        <AvatarImage src={people[1].src} alt={people[1].name} />
-        <AvatarFallback>MC</AvatarFallback>
-      </Avatar>
-      <Button
-        size="icon-xs"
-        className="absolute right-0 bottom-0 rounded-full"
-        aria-label="Edit avatar"
-      >
-        <CameraIcon />
-      </Button>
-    </div>
-  ),
-}
-
-export const AvatarGroupStory: Story = {
-  name: "Avatar Group",
-  render: () => (
-    <AvatarGroup>
-      {people.map((person) => (
-        <PersonAvatar key={person.name} name={person.name} src={person.src} />
-      ))}
-    </AvatarGroup>
-  ),
+export const AvatarStory: Story = {
+  name: "Avatar",
+  args: {
+    variant: "basic",
+    size: "default",
+  },
+  argTypes: {
+    variant: {
+      control: "select",
+      options: avatarVariants,
+    },
+  },
+  render: (args) => <StandaloneAvatarPreview {...args} />,
 }
 
 export const AvatarGroupCountStory: Story = {
@@ -153,27 +221,48 @@ export const AvatarGroupCountStory: Story = {
   ),
 }
 
-export const AvatarGroupWithIcon: Story = {
-  render: () => (
-    <AvatarGroup>
-      {people.slice(0, 2).map((person) => (
-        <PersonAvatar key={person.name} name={person.name} src={person.src} />
-      ))}
-      <Avatar size="default" className="bg-muted text-muted-foreground">
-        <AvatarFallback>
-          <UserPlusIcon />
-        </AvatarFallback>
-      </Avatar>
-    </AvatarGroup>
+export const AvatarGroupStory: Story = {
+  name: "Avatar Group",
+  args: {
+    variant: "group",
+    size: "default",
+  },
+  argTypes: {
+    variant: {
+      control: "select",
+      options: groupVariants,
+    },
+  },
+  render: (args) => (
+    <AvatarGroupPreview
+      variant={args.variant as GroupAvatarStoryArgs["variant"]}
+      size={args.size}
+    />
   ),
 }
 
 export const Sizes: Story = {
-  render: () => (
+  args: {
+    variant: "basic",
+  },
+  argTypes: {
+    variant: {
+      control: "select",
+      options: avatarVariants,
+      description: "Applies the selected avatar treatment across all size examples.",
+    },
+    size: {
+      control: false,
+    },
+  },
+  render: ({ variant = "basic" }) => (
     <div className="flex items-end gap-4">
       {sizes.map((size) => (
         <div key={size} className="flex flex-col items-center gap-2">
-          <PersonAvatar name={people[2].name} src={people[2].src} size={size} />
+          <StandaloneAvatarPreview
+            variant={variant as (typeof avatarVariants)[number]}
+            size={size}
+          />
           <div className="text-xs text-muted-foreground">{size}</div>
         </div>
       ))}

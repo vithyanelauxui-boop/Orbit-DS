@@ -22,18 +22,29 @@ import {
 } from "@orbit-ds"
 
 const trendData = [
-  { month: "Jan", signups: 186, active: 80, revenue: 2400 },
-  { month: "Feb", signups: 305, active: 200, revenue: 2210 },
-  { month: "Mar", signups: 237, active: 120, revenue: 2290 },
-  { month: "Apr", signups: 173, active: 190, revenue: 2000 },
-  { month: "May", signups: 209, active: 130, revenue: 2181 },
-  { month: "Jun", signups: 214, active: 140, revenue: 2500 },
+  { month: "01", signups: 186, active: 80, revenue: 2400 },
+  { month: "02", signups: 305, active: 200, revenue: 2210 },
+  { month: "03", signups: 237, active: 120, revenue: 2290 },
+  { month: "04", signups: 173, active: 190, revenue: 2000 },
+  { month: "05", signups: 209, active: 130, revenue: 2181 },
+  { month: "06", signups: 214, active: 140, revenue: 2500 },
 ] as const
 
 const trafficConfig = {
-  signups: { label: "Signups", color: "var(--chart-1, #2563eb)" },
-  active: { label: "Active users", color: "var(--chart-2, #14b8a6)" },
-  revenue: { label: "Revenue", color: "var(--chart-3, #f97316)" },
+  signups: {
+    label: "01",
+    color: "var(--chart-1, #2563eb)",
+  },
+
+  active: {
+    label: "02",
+    color: "var(--chart-2, #14b8a6)",
+  },
+
+  revenue: {
+    label: "03",
+    color: "var(--chart-3, #f97316)",
+  },
 } satisfies ChartConfig
 
 type LineType =
@@ -70,19 +81,37 @@ function ChartFrame({
   return (
     <ChartContainer
       config={trafficConfig}
-      className={`mx-auto w-full ${expanded ? "max-w-5xl" : "max-w-3xl"}`}
+      className={[
+        "mx-auto h-[420px] w-full",
+        expanded ? "max-w-5xl" : "max-w-3xl",
+      ].join(" ")}
     >
       {children}
     </ChartContainer>
   )
 }
 
-function ChartAxes({ showGrid }: Pick<ChartStoryArgs, "showGrid">) {
+function ChartAxes({
+  showGrid,
+}: Pick<ChartStoryArgs, "showGrid">) {
   return (
     <>
-      {showGrid ? <CartesianGrid vertical={false} /> : null}
-      <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} />
-      <YAxis tickLine={false} axisLine={false} tickMargin={8} />
+      {showGrid ? (
+        <CartesianGrid vertical={false} />
+      ) : null}
+
+      <XAxis
+        dataKey="month"
+        tickLine={false}
+        axisLine={false}
+        tickMargin={8}
+      />
+
+      <YAxis
+        tickLine={false}
+        axisLine={false}
+        tickMargin={8}
+      />
     </>
   )
 }
@@ -91,21 +120,36 @@ function ChartEnhancements({
   showTooltip,
   showLegend,
   indicator = "dot",
-}: Pick<ChartStoryArgs, "showTooltip" | "showLegend"> & {
+}: Pick<
+  ChartStoryArgs,
+  "showTooltip" | "showLegend"
+> & {
   indicator?: "dot" | "line" | "dashed"
 }) {
   return (
     <>
       {showTooltip ? (
-        <ChartTooltip content={<ChartTooltipContent indicator={indicator} />} />
+        <ChartTooltip
+          content={
+            <ChartTooltipContent
+              indicator={indicator}
+            />
+          }
+        />
       ) : null}
-      {showLegend ? <ChartLegend content={<ChartLegendContent />} /> : null}
+
+      {showLegend ? (
+        <ChartLegend
+          content={<ChartLegendContent />}
+        />
+      ) : null}
     </>
   )
 }
 
 const meta = {
   title: "Orbit DS/Chart",
+
   args: {
     showGrid: true,
     showTooltip: true,
@@ -115,23 +159,22 @@ const meta = {
     lineType: "monotone",
     expanded: false,
   },
+
   parameters: {
     layout: "fullscreen",
+
     docs: {
       description: {
         component: `
-Use these chart primitives for line, bar, area, and pie visualizations with Orbit-friendly tooltip and legend styling.
-
-## Parameter Properties
-
-- \`config\`: Maps data keys to labels and theme colors for chart primitives.
-- \`ChartTooltip\`: Wraps tooltip behavior with Orbit styling.
-- \`ChartLegend\`: Renders series labels using the provided chart config.
-- \`ChartContainer\`: Provides layout, CSS variables, and responsive chart scaffolding.
+01
+02
+03
+04
         `,
       },
     },
   },
+
   decorators: [
     (Story, context) => (
       <div
@@ -146,30 +189,44 @@ Use these chart primitives for line, bar, area, and pie visualizations with Orbi
       </div>
     ),
   ],
+
   tags: ["autodocs"],
+
   argTypes: {
     showGrid: {
       control: "boolean",
-      description: "Shows or hides the cartesian grid.",
+      description: "01",
     },
+
     showTooltip: {
       control: "boolean",
-      description: "Shows or hides the chart tooltip.",
+      description: "02",
     },
+
     showLegend: {
       control: "boolean",
-      description: "Shows or hides the chart legend.",
+      description: "03",
     },
+
     strokeWidth: {
-      control: { type: "range", min: 1, max: 6, step: 1 },
-      description: "Adjusts line and area stroke thickness.",
+      control: {
+        type: "range",
+        min: 1,
+        max: 6,
+        step: 1,
+      },
+
+      description: "04",
     },
+
     showDots: {
       control: "boolean",
-      description: "Shows or hides point markers on line charts.",
+      description: "05",
     },
+
     lineType: {
       control: "select",
+
       options: [
         "basis",
         "bump",
@@ -184,11 +241,13 @@ Use these chart primitives for line, bar, area, and pie visualizations with Orbi
         "stepAfter",
         "stepBefore",
       ],
-      description: "Changes the curve interpolation used by line-based charts.",
+
+      description: "06",
     },
+
     expanded: {
       control: "boolean",
-      description: "Expands the chart container width for roomier layouts.",
+      description: "07",
     },
   },
 } satisfies Meta<ChartStoryArgs>
@@ -203,14 +262,22 @@ export const Interactive: Story = {
     showDots: true,
     strokeWidth: 5,
   },
+
   render: (args) => (
     <ChartFrame expanded={args.expanded}>
-      <LineChart data={trendData} margin={{ left: 12, right: 12 }}>
-        <ChartAxes showGrid={args.showGrid} />
+      <LineChart
+        data={trendData}
+        margin={{ left: 12, right: 12 }}
+      >
+        <ChartAxes
+          showGrid={args.showGrid}
+        />
+
         <ChartEnhancements
           showTooltip={args.showTooltip}
           showLegend={args.showLegend}
         />
+
         <RechartsLine
           type={args.lineType}
           dataKey="signups"
@@ -218,6 +285,7 @@ export const Interactive: Story = {
           strokeWidth={args.strokeWidth}
           dot={args.showDots}
         />
+
         <RechartsLine
           type={args.lineType}
           dataKey="active"
@@ -233,12 +301,19 @@ export const Interactive: Story = {
 export const Basic: Story = {
   render: (args) => (
     <ChartFrame expanded={args.expanded}>
-      <LineChart data={trendData} margin={{ left: 12, right: 12 }}>
-        <ChartAxes showGrid={args.showGrid} />
+      <LineChart
+        data={trendData}
+        margin={{ left: 12, right: 12 }}
+      >
+        <ChartAxes
+          showGrid={args.showGrid}
+        />
+
         <ChartEnhancements
           showTooltip={args.showTooltip}
           showLegend={args.showLegend}
         />
+
         <RechartsLine
           type={args.lineType}
           dataKey="signups"
@@ -255,14 +330,22 @@ export const Linear: Story = {
   args: {
     lineType: "linear",
   },
+
   render: (args) => (
     <ChartFrame expanded={args.expanded}>
-      <LineChart data={trendData} margin={{ left: 12, right: 12 }}>
-        <ChartAxes showGrid={args.showGrid} />
+      <LineChart
+        data={trendData}
+        margin={{ left: 12, right: 12 }}
+      >
+        <ChartAxes
+          showGrid={args.showGrid}
+        />
+
         <ChartEnhancements
           showTooltip={args.showTooltip}
           showLegend={args.showLegend}
         />
+
         <RechartsLine
           type={args.lineType}
           dataKey="signups"
@@ -279,14 +362,22 @@ export const Step: Story = {
   args: {
     lineType: "step",
   },
+
   render: (args) => (
     <ChartFrame expanded={args.expanded}>
-      <LineChart data={trendData} margin={{ left: 12, right: 12 }}>
-        <ChartAxes showGrid={args.showGrid} />
+      <LineChart
+        data={trendData}
+        margin={{ left: 12, right: 12 }}
+      >
+        <ChartAxes
+          showGrid={args.showGrid}
+        />
+
         <ChartEnhancements
           showTooltip={args.showTooltip}
           showLegend={args.showLegend}
         />
+
         <RechartsLine
           type={args.lineType}
           dataKey="signups"
@@ -303,14 +394,22 @@ export const Legend: Story = {
   args: {
     showLegend: true,
   },
+
   render: (args) => (
     <ChartFrame expanded={args.expanded}>
-      <LineChart data={trendData} margin={{ left: 12, right: 12 }}>
-        <ChartAxes showGrid={args.showGrid} />
+      <LineChart
+        data={trendData}
+        margin={{ left: 12, right: 12 }}
+      >
+        <ChartAxes
+          showGrid={args.showGrid}
+        />
+
         <ChartEnhancements
           showTooltip={args.showTooltip}
           showLegend={args.showLegend}
         />
+
         <RechartsLine
           type={args.lineType}
           dataKey="signups"
@@ -318,6 +417,7 @@ export const Legend: Story = {
           strokeWidth={args.strokeWidth}
           dot={args.showDots}
         />
+
         <RechartsLine
           type={args.lineType}
           dataKey="active"
@@ -335,28 +435,47 @@ export const Expanded: Story = {
     expanded: true,
     showLegend: true,
   },
+
   render: (args) => (
     <ChartFrame expanded={args.expanded}>
-      <AreaChart data={trendData} margin={{ left: 12, right: 12 }}>
+      <AreaChart
+        data={trendData}
+        margin={{ left: 12, right: 12 }}
+      >
         <defs>
-          <linearGradient id="fillSignups" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient
+            id="fillSignups"
+            x1="0"
+            y1="0"
+            x2="0"
+            y2="1"
+          >
             <stop
               offset="5%"
               stopColor="var(--color-signups)"
               stopOpacity={0.35}
             />
+
             <stop
               offset="95%"
               stopColor="var(--color-signups)"
               stopOpacity={0.02}
             />
           </linearGradient>
-          <linearGradient id="fillActive" x1="0" y1="0" x2="0" y2="1">
+
+          <linearGradient
+            id="fillActive"
+            x1="0"
+            y1="0"
+            x2="0"
+            y2="1"
+          >
             <stop
               offset="5%"
               stopColor="var(--color-active)"
               stopOpacity={0.35}
             />
+
             <stop
               offset="95%"
               stopColor="var(--color-active)"
@@ -364,12 +483,17 @@ export const Expanded: Story = {
             />
           </linearGradient>
         </defs>
-        <ChartAxes showGrid={args.showGrid} />
+
+        <ChartAxes
+          showGrid={args.showGrid}
+        />
+
         <ChartEnhancements
           showTooltip={args.showTooltip}
           showLegend={args.showLegend}
           indicator="line"
         />
+
         <RechartsArea
           type={args.lineType}
           dataKey="signups"
@@ -377,6 +501,7 @@ export const Expanded: Story = {
           fill="url(#fillSignups)"
           strokeWidth={args.strokeWidth}
         />
+
         <RechartsArea
           type={args.lineType}
           dataKey="active"
@@ -393,21 +518,30 @@ export const Stacked: Story = {
   args: {
     showLegend: true,
   },
+
   render: (args) => (
     <ChartFrame expanded={args.expanded}>
-      <BarChart data={trendData} margin={{ left: 12, right: 12 }}>
-        <ChartAxes showGrid={args.showGrid} />
+      <BarChart
+        data={trendData}
+        margin={{ left: 12, right: 12 }}
+      >
+        <ChartAxes
+          showGrid={args.showGrid}
+        />
+
         <ChartEnhancements
           showTooltip={args.showTooltip}
           showLegend={args.showLegend}
           indicator="dashed"
         />
+
         <RechartsBar
           dataKey="signups"
           stackId="totals"
           fill="var(--color-signups)"
           radius={[0, 0, 6, 6]}
         />
+
         <RechartsBar
           dataKey="active"
           stackId="totals"

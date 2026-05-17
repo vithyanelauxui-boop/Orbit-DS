@@ -1,16 +1,34 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import type { ReactNode } from "react"
 
 import { Icon, iconNames, type IconComponentProps } from "@orbit-ds"
 
 const variants = ["regular", "bold", "fill", "duotone"] as const
-const sampleIcons = [
-  "airplane",
-  "alarm",
-  "address-book",
-  "anchor",
-  "warning-diamond",
-  "image",
-] as const
+const iconSizes = [16, 24, 32, 48] as const
+
+function getGridTemplateColumns(size: number, minColumnWidth: number) {
+  const tileWidth = Math.max(minColumnWidth, size + 72)
+  return `repeat(auto-fit, minmax(${tileWidth}px, 1fr))`
+}
+
+function IconFrame({
+  children,
+  label,
+}: {
+  children: ReactNode
+  label: string
+}) {
+  return (
+    <div className="flex aspect-square w-full flex-col items-center justify-center rounded-lg border p-3 text-center">
+      <div className="flex flex-1 items-center justify-center self-stretch">
+        {children}
+      </div>
+      <div className="mt-2 text-xs leading-tight text-muted-foreground">
+        {label}
+      </div>
+    </div>
+  )
+}
 
 const meta = {
   title: "Orbit DS/Icon",
@@ -71,47 +89,53 @@ type Story = StoryObj<typeof meta>
 
 export const Playground: Story = {}
 
-export const Regular: Story = {
-  args: {
-    name: "airplane",
-    variant: "regular",
-  },
-}
-
-export const Bold: Story = {
-  args: {
-    name: "airplane",
-    variant: "bold",
-  },
-}
-
-export const Fill: Story = {
-  args: {
-    name: "airplane",
-    variant: "fill",
-  },
-}
-
-export const Duotone: Story = {
-  args: {
-    name: "airplane",
-    variant: "duotone",
-  },
-}
-
-export const SampleSet: Story = {
+export const Variants: Story = {
   argTypes: {
-    name: { control: false },
+    variant: { control: false },
+    size: { control: false },
     "aria-label": { control: false },
     "aria-hidden": { control: false },
   },
-  render: ({ variant, size }) => (
-    <div className="grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-3">
-      {sampleIcons.map((name) => (
-        <div key={name} className="flex min-h-24 flex-col items-center justify-center gap-2 rounded-lg border p-3 text-center">
-          <Icon name={name} variant={variant as IconComponentProps["variant"]} size={size} aria-hidden />
-          <div className="text-xs text-muted-foreground">{name}</div>
-        </div>
+  render: ({ name }) => (
+    <div
+      className="mx-auto grid w-full max-w-4xl gap-3"
+      style={{ gridTemplateColumns: getGridTemplateColumns(32, 140) }}
+    >
+      {variants.map((variant) => (
+        <IconFrame key={variant} label={variant}>
+          <Icon
+            name={name ?? "airplane"}
+            variant={variant}
+            size={32}
+            aria-hidden
+          />
+        </IconFrame>
+      ))}
+    </div>
+  ),
+}
+
+export const Sizes: Story = {
+  argTypes: {
+    name: { control: false },
+    size: { control: false },
+    "aria-label": { control: false },
+    "aria-hidden": { control: false },
+  },
+  render: ({ variant }) => (
+    <div
+      className="mx-auto grid w-full max-w-4xl gap-3"
+      style={{ gridTemplateColumns: getGridTemplateColumns(48, 140) }}
+    >
+      {iconSizes.map((size) => (
+        <IconFrame key={size} label={`${size}px`}>
+          <Icon
+            name="airplane"
+            variant={variant as IconComponentProps["variant"]}
+            size={size}
+            aria-hidden
+          />
+        </IconFrame>
       ))}
     </div>
   ),
@@ -119,18 +143,33 @@ export const SampleSet: Story = {
 
 export const AllIcons: Story = {
   name: "All Icons",
+  args: {
+    size: 20,
+  },
   argTypes: {
     name: { control: false },
     "aria-label": { control: false },
     "aria-hidden": { control: false },
   },
   render: ({ variant, size }) => (
-    <div className="grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-3">
+    <div
+      className="mx-auto grid w-full max-w-7xl gap-2.5"
+      style={{
+        gridTemplateColumns: getGridTemplateColumns(
+          typeof size === "number" ? size : 20,
+          112
+        ),
+      }}
+    >
       {iconNames.map((name) => (
-        <div key={name} className="flex min-h-24 flex-col items-center justify-center gap-2 rounded-lg border p-3 text-center">
-          <Icon name={name} variant={variant as IconComponentProps["variant"]} size={size} aria-hidden />
-          <div className="text-xs text-muted-foreground">{name}</div>
-        </div>
+        <IconFrame key={name} label={name}>
+          <Icon
+            name={name}
+            variant={variant as IconComponentProps["variant"]}
+            size={size}
+            aria-hidden
+          />
+        </IconFrame>
       ))}
     </div>
   ),

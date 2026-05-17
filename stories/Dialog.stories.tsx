@@ -11,6 +11,10 @@ import {
   DialogTrigger,
 } from "@orbit-ds"
 
+type DialogStoryArgs = {
+  showCloseButton?: boolean
+}
+
 const meta = {
   title: "Orbit DS/Dialog",
   component: Dialog,
@@ -25,7 +29,17 @@ Use dialogs for focused tasks, confirmations, settings forms, and interruption-w
     },
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof Dialog>
+  argTypes: {
+    showCloseButton: {
+      control: "boolean",
+      description:
+        "Shows or hides the footer close button in dialog examples.",
+    },
+  },
+  args: {
+    showCloseButton: true,
+  },
+} satisfies Meta<DialogStoryArgs>
 
 export default meta
 
@@ -37,12 +51,14 @@ function DialogShell({
   description,
   contentClassName,
   compact = false,
+  showCloseButton = true,
 }: {
   trigger: string
   title: string
   description: string
   contentClassName?: string
   compact?: boolean
+  showCloseButton?: boolean
 }) {
   return (
     <Dialog>
@@ -54,7 +70,7 @@ function DialogShell({
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
-        <DialogFooter showCloseButton>
+        <DialogFooter showCloseButton={showCloseButton}>
           <Button>Continue</Button>
         </DialogFooter>
       </DialogContent>
@@ -63,29 +79,31 @@ function DialogShell({
 }
 
 export const Basic: Story = {
-  render: () => (
+  render: ({ showCloseButton = true }) => (
     <DialogShell
       trigger="Open dialog"
       title="Invite teammates"
       description="Share a secure workspace link so your team can review components and release notes."
+      showCloseButton={showCloseButton}
     />
   ),
 }
 
 export const Small: Story = {
-  render: () => (
+  render: ({ showCloseButton = true }) => (
     <DialogShell
       trigger="Open small dialog"
       title="Save draft?"
       description="Your changes will remain private until you publish."
       contentClassName="sm:max-w-xs"
       compact
+      showCloseButton={showCloseButton}
     />
   ),
 }
 
 export const Responsive: Story = {
-  render: () => (
+  render: ({ showCloseButton = true }) => (
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="outline">Open responsive dialog</Button>
@@ -108,7 +126,7 @@ export const Responsive: Story = {
             <div>Send immediately or schedule for tomorrow morning</div>
           </div>
         </div>
-        <DialogFooter showCloseButton>
+        <DialogFooter showCloseButton={showCloseButton}>
           <Button>Send update</Button>
         </DialogFooter>
       </DialogContent>
@@ -117,7 +135,7 @@ export const Responsive: Story = {
 }
 
 export const Destructive: Story = {
-  render: () => (
+  render: ({ showCloseButton = true }) => (
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="destructive">Delete project</Button>
@@ -130,7 +148,7 @@ export const Destructive: Story = {
             history.
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter showCloseButton>
+        <DialogFooter showCloseButton={showCloseButton}>
           <Button variant="destructive">Delete</Button>
         </DialogFooter>
       </DialogContent>

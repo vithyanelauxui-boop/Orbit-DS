@@ -11,9 +11,16 @@ import {
   DrawerTrigger,
 } from "@orbit-ds"
 
+type DrawerStoryArgs = {
+  direction?: "bottom" | "left" | "right" | "top"
+}
+
 const meta = {
   title: "Orbit DS/Drawer",
   component: Drawer,
+  args: {
+    direction: "bottom",
+  },
   parameters: {
     layout: "centered",
     docs: {
@@ -25,7 +32,15 @@ Use drawers for mobile-first flows, secondary task panels, inline settings, and 
     },
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof Drawer>
+  argTypes: {
+    direction: {
+      control: "inline-radio",
+      options: ["bottom", "top", "right", "left"],
+      description:
+        "Changes the side from which the drawer enters.",
+    },
+  },
+} satisfies Meta<DrawerStoryArgs>
 
 export default meta
 
@@ -82,18 +97,12 @@ function DrawerShell({
   )
 }
 
-export const Bottom: Story = {
-  render: () => <DrawerShell trigger="Open bottom drawer" />,
-}
-
-export const Top: Story = {
-  render: () => <DrawerShell trigger="Open top drawer" direction="top" />,
-}
-
-export const Right: Story = {
-  render: () => <DrawerShell trigger="Open right drawer" direction="right" />,
-}
-
-export const Left: Story = {
-  render: () => <DrawerShell trigger="Open left drawer" direction="left" />,
+export const DrawerStory: Story = {
+  name: "Drawer",
+  render: ({ direction = "bottom" }) => (
+    <DrawerShell
+      trigger={`Open ${direction} drawer`}
+      direction={direction}
+    />
+  ),
 }

@@ -153,13 +153,17 @@ export const Sizes: Story = {
       <Item variant={variant} size="sm">
         <ItemContent>
           <ItemTitle>Small size</ItemTitle>
-          <ItemDescription>Slightly tighter without feeling cramped.</ItemDescription>
+          <ItemDescription>
+            Slightly tighter without feeling cramped.
+          </ItemDescription>
         </ItemContent>
       </Item>
       <Item variant={variant} size="xs">
         <ItemContent>
           <ItemTitle>Extra small size</ItemTitle>
-          <ItemDescription>Best for compact menus and dense lists.</ItemDescription>
+          <ItemDescription>
+            Best for compact menus and dense lists.
+          </ItemDescription>
         </ItemContent>
       </Item>
     </div>
@@ -175,7 +179,8 @@ export const WithIcon: Story = {
       <ItemContent>
         <ItemTitle>Design system audit</ItemTitle>
         <ItemDescription>
-          Review spacing, typography, and state coverage across the component library.
+          Review spacing, typography, and state coverage across the component
+          library.
         </ItemDescription>
       </ItemContent>
     </Item>
@@ -213,7 +218,8 @@ export const WithAvatar: Story = {
       <ItemContent>
         <ItemTitle>Ananya Rao</ItemTitle>
         <ItemDescription>
-          Product designer focused on system documentation and reusable UI patterns.
+          Product designer focused on system documentation and reusable UI
+          patterns.
         </ItemDescription>
       </ItemContent>
       <ItemActions>
@@ -236,7 +242,9 @@ export const WithHeader: Story = {
         </ItemDescription>
       </ItemContent>
       <ItemFooter>
-        <span className="text-sm text-muted-foreground">3 comments pending</span>
+        <span className="text-sm text-muted-foreground">
+          3 comments pending
+        </span>
         <Button size="xs" variant="outline">
           Review
         </Button>
@@ -246,6 +254,10 @@ export const WithHeader: Story = {
 }
 
 export const Link: Story = {
+  args: {
+    size: "xs",
+  },
+
   render: () => (
     <Item asChild variant="outline" className="max-w-xl">
       <a href="#">
@@ -275,7 +287,11 @@ export const WithDropdown: Story = {
       <ItemActions>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon-xs" aria-label="Open item actions">
+            <Button
+              variant="ghost"
+              size="icon-xs"
+              aria-label="Open item actions"
+            >
               <DotsIcon />
             </Button>
           </DropdownMenuTrigger>
@@ -296,14 +312,18 @@ export const Group: Story = {
       <Item variant="outline">
         <ItemContent>
           <ItemTitle>First row</ItemTitle>
-          <ItemDescription>Primary row content with description.</ItemDescription>
+          <ItemDescription>
+            Primary row content with description.
+          </ItemDescription>
         </ItemContent>
       </Item>
       <ItemSeparator />
       <Item variant="outline" size="sm">
         <ItemContent>
           <ItemTitle>Second row</ItemTitle>
-          <ItemDescription>Grouped rows with consistent rhythm.</ItemDescription>
+          <ItemDescription>
+            Grouped rows with consistent rhythm.
+          </ItemDescription>
         </ItemContent>
       </Item>
       <ItemSeparator />

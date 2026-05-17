@@ -16,11 +16,13 @@ function CheckboxPreview({
   checked = true,
   disabled = false,
   label = "Email notifications",
+  description,
   controlPlacement = "start",
 }: {
   checked?: boolean
   disabled?: boolean
   label?: string
+  description?: string
   controlPlacement?: "start" | "end"
 }) {
   return (
@@ -32,9 +34,9 @@ function CheckboxPreview({
       <Checkbox checked={checked} disabled={disabled} />
       <FieldContent>
         <FieldTitle>{label}</FieldTitle>
-        <FieldDescription>
-          Receive release notes, approvals, and comment digests in your inbox.
-        </FieldDescription>
+        {description ? (
+          <FieldDescription>{description}</FieldDescription>
+        ) : null}
       </FieldContent>
     </Field>
   )
@@ -78,6 +80,7 @@ Use checkboxes for binary choices, permission lists, consent prompts, and multi-
     checked: { control: "boolean" },
     disabled: { control: "boolean" },
     label: { control: "text" },
+    description: { control: "text" },
     controlPlacement: {
       control: "inline-radio",
       options: ["start", "end"],
@@ -87,6 +90,8 @@ Use checkboxes for binary choices, permission lists, consent prompts, and multi-
     checked: true,
     disabled: false,
     label: "Email notifications",
+    description:
+      "Receive release notes, approvals, and comment digests in your inbox.",
     controlPlacement: "start",
   },
 } satisfies Meta<typeof CheckboxPreview>
@@ -96,6 +101,10 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Basic: Story = {
+  args: {
+    label: "Accept terms and conditions",
+    description: "",
+  },
   render: (args) => <CheckboxPreview {...args} />,
 }
 
@@ -123,17 +132,39 @@ export const Disabled: Story = {
 
 export const Indeterminate: Story = {
   render: () => {
-    const [checked, setChecked] = React.useState<boolean | "indeterminate">(
-      "indeterminate"
-    )
+    const [items, setItems] = React.useState({
+      comments: true,
+      mentions: false,
+      updates: true,
+    })
+
+    const values = Object.values(items)
+    const allChecked = values.every(Boolean)
+    const someChecked = values.some(Boolean)
+    const checkedState: boolean | "indeterminate" = allChecked
+      ? true
+      : someChecked
+        ? "indeterminate"
+        : false
+
+    function handleSelectAll(
+      value: boolean | "indeterminate"
+    ) {
+      const nextChecked = value === true
+      setItems({
+        comments: nextChecked,
+        mentions: nextChecked,
+        updates: nextChecked,
+      })
+    }
 
     return (
-      <FieldGroup className="max-w-md">
+      <FieldGroup className="w-fit min-w-[20rem]">
         <Field orientation="horizontal">
           <Checkbox
             id="all-projects"
-            checked={checked}
-            onCheckedChange={(value) => setChecked(value)}
+            checked={checkedState}
+            onCheckedChange={handleSelectAll}
           />
           <FieldContent>
             <FieldLabel htmlFor="all-projects">Select all projects</FieldLabel>
@@ -143,6 +174,56 @@ export const Indeterminate: Story = {
             </FieldDescription>
           </FieldContent>
         </Field>
+
+        <FieldSet className="w-full pl-6">
+          <Field orientation="horizontal">
+            <Checkbox
+              id="project-comments"
+              checked={items.comments}
+              onCheckedChange={(value) =>
+                setItems((current) => ({
+                  ...current,
+                  comments: value === true,
+                }))
+              }
+            />
+            <FieldLabel htmlFor="project-comments">
+              Comments
+            </FieldLabel>
+          </Field>
+
+          <Field orientation="horizontal">
+            <Checkbox
+              id="project-mentions"
+              checked={items.mentions}
+              onCheckedChange={(value) =>
+                setItems((current) => ({
+                  ...current,
+                  mentions: value === true,
+                }))
+              }
+            />
+            <FieldLabel htmlFor="project-mentions">
+              Mentions
+            </FieldLabel>
+          </Field>
+
+          <Field orientation="horizontal">
+            <Checkbox
+              id="project-updates"
+              checked={items.updates}
+              onCheckedChange={(value) =>
+                setItems((current) => ({
+                  ...current,
+                  updates: value === true,
+                }))
+              }
+            />
+            <FieldLabel htmlFor="project-updates">
+              Product updates
+            </FieldLabel>
+          </Field>
+        </FieldSet>
       </FieldGroup>
     )
   },

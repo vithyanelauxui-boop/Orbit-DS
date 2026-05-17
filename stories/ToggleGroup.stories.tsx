@@ -14,7 +14,7 @@ const meta = {
   title: "Orbit DS/Toggle Group",
   component: ToggleGroup,
   parameters: {
-    layout: "padded",
+    layout: "centered",
     docs: {
       description: {
         component:
@@ -23,6 +23,14 @@ const meta = {
     },
   },
   tags: ["autodocs"],
+  argTypes: {
+    disabled: {
+      control: "boolean",
+    },
+  },
+  args: {
+    disabled: false,
+  },
 } satisfies Meta<typeof ToggleGroup>
 
 export default meta
@@ -33,15 +41,15 @@ export const Single: Story = {
   args: {
     type: "single",
   },
-  render: () => (
+  render: ({ disabled }) => (
     <ToggleGroup type="single" defaultValue="left">
-      <ToggleGroupItem value="left" aria-label="Align left">
+      <ToggleGroupItem value="left" disabled={disabled} aria-label="Align left">
         <TextAlignLeftIcon />
       </ToggleGroupItem>
-      <ToggleGroupItem value="center" aria-label="Align center">
+      <ToggleGroupItem value="center" disabled={disabled} aria-label="Align center">
         <TextAlignCenterIcon />
       </ToggleGroupItem>
-      <ToggleGroupItem value="right" aria-label="Align right">
+      <ToggleGroupItem value="right" disabled={disabled} aria-label="Align right">
         <TextAlignRightIcon />
       </ToggleGroupItem>
     </ToggleGroup>
@@ -52,17 +60,17 @@ export const Multiple: Story = {
   args: {
     type: "multiple",
   },
-  render: () => (
+  render: ({ disabled }) => (
     <ToggleGroup type="multiple" defaultValue={["grid", "desktop"]}>
-      <ToggleGroupItem value="grid">
+      <ToggleGroupItem value="grid" disabled={disabled}>
         <SquaresFourIcon />
         Grid
       </ToggleGroupItem>
-      <ToggleGroupItem value="list">
+      <ToggleGroupItem value="list" disabled={disabled}>
         <ListBulletsIcon />
         List
       </ToggleGroupItem>
-      <ToggleGroupItem value="desktop">
+      <ToggleGroupItem value="desktop" disabled={disabled}>
         <LaptopIcon />
         Desktop
       </ToggleGroupItem>
@@ -74,11 +82,11 @@ export const OutlineVertical: Story = {
   args: {
     type: "single",
   },
-  render: () => (
+  render: ({ disabled }) => (
     <ToggleGroup type="single" orientation="vertical" variant="outline" value="grid">
-      <ToggleGroupItem value="grid">Grid</ToggleGroupItem>
-      <ToggleGroupItem value="list">List</ToggleGroupItem>
-      <ToggleGroupItem value="board">Board</ToggleGroupItem>
+      <ToggleGroupItem value="grid" disabled={disabled}>Grid</ToggleGroupItem>
+      <ToggleGroupItem value="list" disabled={disabled}>List</ToggleGroupItem>
+      <ToggleGroupItem value="board" disabled={disabled}>Board</ToggleGroupItem>
     </ToggleGroup>
   ),
 }

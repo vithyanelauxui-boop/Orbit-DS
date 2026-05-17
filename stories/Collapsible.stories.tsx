@@ -3,10 +3,6 @@ import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import {
   Button,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
@@ -33,9 +29,12 @@ function ChevronIcon({ open }: { open: boolean }) {
   )
 }
 
+type CollapsibleStoryArgs = {
+  state?: "inactive" | "active"
+}
+
 const meta = {
   title: "Orbit DS/Collapsible",
-  component: Collapsible,
   parameters: {
     layout: "fullscreen",
     docs: {
@@ -68,72 +67,147 @@ Use collapsibles for progressive disclosure, compact detail panels, advanced fil
     ),
   ],
   tags: ["autodocs"],
-} satisfies Meta<typeof Collapsible>
+  argTypes: {
+    state: {
+      control: "inline-radio",
+      options: ["inactive", "active"],
+      description:
+        "Controls whether the collapsible is closed or open.",
+    },
+  },
+  args: {
+    state: "inactive",
+  },
+} satisfies Meta<CollapsibleStoryArgs>
 
 export default meta
 
 type Story = StoryObj<typeof meta>
 
 export const Basic: Story = {
-  render: () => {
-    const [open, setOpen] = React.useState(false)
+  args: {
+    state: "inactive",
+  },
+  render: ({ state = "inactive" }) => {
+    const open = state === "active"
 
     return (
-      <Card className="max-w-lg">
-        <Collapsible open={open} onOpenChange={setOpen}>
-          <CardHeader className="border-b">
-            <div className="flex items-center justify-between gap-3">
-              <CardTitle>Advanced filters</CardTitle>
-              <CollapsibleTrigger asChild>
-                <Button variant="outline" size="sm">
-                  Toggle
-                  <ChevronIcon open={open} />
-                </Button>
-              </CollapsibleTrigger>
-            </div>
-          </CardHeader>
-          <CollapsibleContent>
-            <CardContent className="grid gap-2 py-4 text-sm text-muted-foreground">
-              <div>Status: Active, Draft</div>
-              <div>Owner: Design systems team</div>
-              <div>Updated within the last 30 days</div>
-            </CardContent>
-          </CollapsibleContent>
-        </Collapsible>
-      </Card>
+      <Collapsible
+        open={open}
+        className="flex w-[350px] flex-col gap-2"
+      >
+        <div className="flex items-center justify-between gap-4 px-4">
+          <h4 className="text-sm font-semibold">
+            Order #4189
+          </h4>
+
+          <CollapsibleTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="size-8"
+              aria-label="Toggle details"
+            >
+              <ChevronIcon open={open} />
+              <span className="sr-only">
+                Toggle details
+              </span>
+            </Button>
+          </CollapsibleTrigger>
+        </div>
+
+        <div className="flex items-center justify-between rounded-md border px-4 py-2 text-sm">
+          <span className="text-muted-foreground">
+            Status
+          </span>
+          <span className="font-medium">Shipped</span>
+        </div>
+
+        <CollapsibleContent className="flex flex-col gap-2">
+          <div className="rounded-md border px-4 py-2 text-sm">
+            <p className="font-medium">
+              Shipping address
+            </p>
+            <p className="text-muted-foreground">
+              100 Market St, San Francisco
+            </p>
+          </div>
+
+          <div className="rounded-md border px-4 py-2 text-sm">
+            <p className="font-medium">Items</p>
+            <p className="text-muted-foreground">
+              2x Studio Headphones
+            </p>
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
     )
   },
 }
 
 export const DefaultOpen: Story = {
-  render: () => (
-    <Card className="max-w-lg">
-      <Collapsible defaultOpen>
-        <CardHeader className="border-b">
-          <div className="flex items-center justify-between gap-3">
-            <CardTitle>Release notes</CardTitle>
-            <CollapsibleTrigger asChild>
-              <Button variant="outline" size="sm">
-                Collapse
-              </Button>
-            </CollapsibleTrigger>
-          </div>
-        </CardHeader>
-        <CollapsibleContent>
-          <CardContent className="grid gap-2 py-4 text-sm text-muted-foreground">
-            <div>New `ButtonGroup` and `Calendar` stories</div>
-            <div>Improved docs coverage for composable primitives</div>
-            <div>Typechecked examples for Storybook consumers</div>
-          </CardContent>
-        </CollapsibleContent>
-      </Collapsible>
-    </Card>
+  args: {
+    state: "active",
+  },
+  render: ({ state = "active" }) => (
+    <Collapsible
+      open={state === "active"}
+      className="flex w-[350px] flex-col gap-2"
+    >
+      <div className="flex items-center justify-between gap-4 px-4">
+        <h4 className="text-sm font-semibold">
+          Order #4189
+        </h4>
+
+        <CollapsibleTrigger asChild>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="size-8"
+            aria-label="Toggle details"
+          >
+            <ChevronIcon open={state === "active"} />
+            <span className="sr-only">
+              Toggle details
+            </span>
+          </Button>
+        </CollapsibleTrigger>
+      </div>
+
+      <div className="flex items-center justify-between rounded-md border px-4 py-2 text-sm">
+        <span className="text-muted-foreground">
+          Status
+        </span>
+        <span className="font-medium">Shipped</span>
+      </div>
+
+      <CollapsibleContent className="flex flex-col gap-2">
+        <div className="rounded-md border px-4 py-2 text-sm">
+          <p className="font-medium">
+            Shipping address
+          </p>
+          <p className="text-muted-foreground">
+            100 Market St, San Francisco
+          </p>
+        </div>
+
+        <div className="rounded-md border px-4 py-2 text-sm">
+          <p className="font-medium">Items</p>
+          <p className="text-muted-foreground">
+            2x Studio Headphones
+          </p>
+        </div>
+      </CollapsibleContent>
+    </Collapsible>
   ),
 }
 
 export const InlineDetails: Story = {
-  render: () => {
-    const [open, setOpen] = React.useState(false)
+  args: {
+    state: "inactive",
+  },
+  render: ({ state = "inactive" }) => {
+    const open = state === "active"
 
     return (
       <div className="max-w-md rounded-xl border p-4">
@@ -144,7 +218,7 @@ export const InlineDetails: Story = {
               $2,480 due April 4
             </div>
           </div>
-          <Collapsible open={open} onOpenChange={setOpen}>
+          <Collapsible open={open}>
             <CollapsibleTrigger asChild>
               <Button variant="ghost" size="sm">
                 {open ? "Hide details" : "View details"}

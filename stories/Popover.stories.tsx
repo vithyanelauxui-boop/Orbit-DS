@@ -20,6 +20,12 @@ const meta = {
       description: {
         component: `
 Use popovers for lightweight forms, helper panels, quick actions, and attached contextual content.
+
+## Parameter Properties
+
+- \`PopoverTrigger asChild\`: Lets the trigger behavior be applied to a child element such as a button.
+- \`PopoverContent className\`: Adjusts the popover panel width and layout styling.
+- \`PopoverTitle\` and \`PopoverDescription\`: Provide structured heading and supporting copy inside the panel.
         `,
       },
     },

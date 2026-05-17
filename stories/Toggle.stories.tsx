@@ -7,7 +7,7 @@ const meta = {
   title: "Orbit DS/Toggle",
   component: Toggle,
   parameters: {
-    layout: "fullscreen",
+    layout: "centered",
     docs: {
       description: {
         component: `
@@ -17,6 +17,7 @@ Use toggles for independently pressed states such as formatting controls and com
 
 - \`variant\`: Chooses the toggle surface style.
 - \`size\`: Controls the toggle scale and spacing.
+- \`disabled\`: Prevents interaction and applies disabled styling.
         `,
       },
     },
@@ -31,10 +32,14 @@ Use toggles for independently pressed states such as formatting controls and com
       control: "inline-radio",
       options: ["sm", "default", "lg"],
     },
+    disabled: {
+      control: "boolean",
+    },
   },
   args: {
     variant: "default",
     size: "default",
+    disabled: false,
   },
 } satisfies Meta<typeof Toggle>
 
@@ -43,16 +48,26 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Basic: Story = {
-  render: ({ variant, size }) => (
-    <Toggle variant={variant} size={size} aria-label="Toggle bold">
+  render: ({ variant, size, disabled }) => (
+    <Toggle
+      variant={variant}
+      size={size}
+      disabled={disabled}
+      aria-label="Toggle bold"
+    >
       <TextBIcon />
     </Toggle>
   ),
 }
 
 export const Outline: Story = {
-  render: ({ size }) => (
-    <Toggle variant="outline" size={size} aria-label="Toggle centered alignment">
+  render: ({ size, disabled }) => (
+    <Toggle
+      variant="outline"
+      size={size}
+      disabled={disabled}
+      aria-label="Toggle centered alignment"
+    >
       <TextAlignCenterIcon />
       Center
     </Toggle>
@@ -60,11 +75,11 @@ export const Outline: Story = {
 }
 
 export const Sizes: Story = {
-  render: ({ variant }) => (
+  render: ({ variant, disabled }) => (
     <div className="flex items-center gap-3">
-      <Toggle variant={variant} size="sm">Small</Toggle>
-      <Toggle variant={variant}>Default</Toggle>
-      <Toggle variant={variant} size="lg">Large</Toggle>
+      <Toggle variant={variant} size="sm" disabled={disabled}>Small</Toggle>
+      <Toggle variant={variant} disabled={disabled}>Default</Toggle>
+      <Toggle variant={variant} size="lg" disabled={disabled}>Large</Toggle>
     </div>
   ),
 }

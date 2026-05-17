@@ -14,15 +14,28 @@ const meta = {
   title: "Orbit DS/Pagination",
   component: Pagination,
   parameters: {
-    layout: "padded",
+    layout: "fullscreen",
     docs: {
       description: {
         component: `
 Use pagination for multi-page tables, archives, and content collections where sequential navigation matters.
+
+## Parameter Properties
+
+- \`PaginationLink isActive\`: Marks the current page in the sequence.
+- \`PaginationPrevious text\`: Replaces the default previous label with custom copy.
+- \`PaginationNext text\`: Replaces the default next label with custom copy.
         `,
       },
     },
   },
+  decorators: [
+    (Story) => (
+      <div className="flex min-h-[70vh] items-center justify-center px-6">
+        <Story />
+      </div>
+    ),
+  ],
   tags: ["autodocs"],
 } satisfies Meta<typeof Pagination>
 

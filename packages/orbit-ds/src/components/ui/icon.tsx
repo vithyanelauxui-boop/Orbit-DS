@@ -1538,7 +1538,13 @@ export const Icon = React.forwardRef<SVGSVGElement, IconComponentProps>(
 
     const IconComponent = Icons[iconName] as React.ComponentType<IconProps>
 
-    return <IconComponent ref={ref} {...props} />
+    return (
+      <IconComponent
+        {...props}
+        ref={ref}
+        viewBox="0 0 256 256"
+      />
+    )
   }
 )
 

@@ -21,28 +21,63 @@ const meta = {
   title: "Orbit DS/Menubar",
   component: Menubar,
   parameters: {
-    layout: "padded",
+    layout: "fullscreen",
     docs: {
       description: {
         component: `
 Use menubars for app-style desktop navigation, editor menus, and command clusters with nested options.
+
+## Parameter Properties
+
+- \`placement\`: Controls whether the root menu content opens with the default positioning, above, or below the trigger.
         `,
       },
     },
   },
+  decorators: [
+    (Story) => (
+      <div className="flex min-h-[70vh] items-center justify-center px-6">
+        <Story />
+      </div>
+    ),
+  ],
   tags: ["autodocs"],
+  argTypes: {
+    placement: {
+      control: "inline-radio",
+      options: ["default", "top", "bottom"],
+      description:
+        "Controls the dropdown placement for the root menu content.",
+      table: {
+        defaultValue: { summary: "default" },
+      },
+    },
+  },
+  args: {
+    placement: "default",
+  },
 } satisfies Meta<typeof Menubar>
 
 export default meta
 
 type Story = StoryObj<typeof meta>
 
+function getContentSide(
+  placement: "default" | "top" | "bottom"
+) {
+  if (placement === "default") {
+    return undefined
+  }
+
+  return placement === "top" ? "bottom" : "top"
+}
+
 export const Basic: Story = {
-  render: () => (
+  render: ({ placement }) => (
     <Menubar>
       <MenubarMenu>
         <MenubarTrigger>File</MenubarTrigger>
-        <MenubarContent>
+        <MenubarContent side={getContentSide(placement)}>
           <MenubarItem>
             New file
             <MenubarShortcut>⌘N</MenubarShortcut>
@@ -54,7 +89,7 @@ export const Basic: Story = {
       </MenubarMenu>
       <MenubarMenu>
         <MenubarTrigger>Edit</MenubarTrigger>
-        <MenubarContent>
+        <MenubarContent side={getContentSide(placement)}>
           <MenubarItem>Undo</MenubarItem>
           <MenubarItem>Redo</MenubarItem>
         </MenubarContent>
@@ -64,7 +99,7 @@ export const Basic: Story = {
 }
 
 export const CheckboxItems: Story = {
-  render: () => {
+  render: ({ placement }) => {
     const [statusBar, setStatusBar] = React.useState(true)
     const [activity, setActivity] = React.useState(false)
 
@@ -72,7 +107,7 @@ export const CheckboxItems: Story = {
       <Menubar>
         <MenubarMenu>
           <MenubarTrigger>View</MenubarTrigger>
-          <MenubarContent>
+          <MenubarContent side={getContentSide(placement)}>
             <MenubarCheckboxItem
               checked={statusBar}
               onCheckedChange={setStatusBar}
@@ -93,14 +128,14 @@ export const CheckboxItems: Story = {
 }
 
 export const SubmenuAndRadio: Story = {
-  render: () => {
+  render: ({ placement }) => {
     const [density, setDensity] = React.useState("comfortable")
 
     return (
       <Menubar>
         <MenubarMenu>
           <MenubarTrigger>Layout</MenubarTrigger>
-          <MenubarContent>
+          <MenubarContent side={getContentSide(placement)}>
             <MenubarSub>
               <MenubarSubTrigger>Share</MenubarSubTrigger>
               <MenubarSubContent>

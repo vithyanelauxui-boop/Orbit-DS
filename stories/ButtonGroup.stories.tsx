@@ -149,14 +149,9 @@ export const Orientation: Story = {
 export const Sizes: Story = {
   argTypes: {
     size: { control: false },
-    orientation: {
-      control: "inline-radio",
-      options: orientations,
-      description:
-        "Applies horizontal or vertical layout to every size example.",
-    },
+    orientation: { control: false },
   },
-  render: ({ orientation = "horizontal" }) => (
+  render: () => (
     <div className="grid gap-4">
       {sizes.map((size) => (
         <div
@@ -168,7 +163,7 @@ export const Sizes: Story = {
           </div>
           <ButtonGroupPreview
             size={size}
-            orientation={orientation}
+            orientation="horizontal"
           />
         </div>
       ))}
@@ -179,11 +174,21 @@ export const Sizes: Story = {
 export const Nested: Story = {
   argTypes: {
     size: { control: false },
-    orientation: { control: false },
+    orientation: {
+      control: "inline-radio",
+      options: orientations,
+    },
   },
-  render: () => (
-    <div className="flex flex-wrap items-center gap-3 rounded-xl border p-3">
-      <ButtonGroup orientation="horizontal">
+  render: ({ orientation = "horizontal" }) => (
+    <div
+      className={[
+        "rounded-xl border p-3",
+        orientation === "vertical"
+          ? "flex flex-col items-start gap-3"
+          : "flex flex-wrap items-center gap-3",
+      ].join(" ")}
+    >
+      <ButtonGroup orientation={orientation}>
         <Button variant="outline" size="sm">
           Preview
         </Button>
@@ -191,7 +196,7 @@ export const Nested: Story = {
           Publish
         </Button>
       </ButtonGroup>
-      <ButtonGroup orientation="horizontal">
+      <ButtonGroup orientation={orientation}>
         <Button
           variant="outline"
           size="icon-sm"
@@ -213,11 +218,21 @@ export const Nested: Story = {
 export const Separator: Story = {
   argTypes: {
     size: { control: false },
-    orientation: { control: false },
+    orientation: {
+      control: "inline-radio",
+      options: orientations,
+    },
   },
-  render: () => (
-    <div className="flex flex-wrap items-center rounded-xl border p-1">
-      <ButtonGroup orientation="horizontal">
+  render: ({ orientation = "horizontal" }) => (
+    <div
+      className={[
+        "rounded-xl border p-1",
+        orientation === "vertical"
+          ? "flex flex-col items-start"
+          : "flex flex-wrap items-center",
+      ].join(" ")}
+    >
+      <ButtonGroup orientation={orientation}>
         <Button variant="ghost" size="sm">
           Undo
         </Button>
@@ -225,8 +240,14 @@ export const Separator: Story = {
           Redo
         </Button>
       </ButtonGroup>
-      <ButtonGroupSeparator orientation="vertical" />
-      <ButtonGroup orientation="horizontal">
+      <ButtonGroupSeparator
+        orientation={
+          orientation === "horizontal"
+            ? "vertical"
+            : "horizontal"
+        }
+      />
+      <ButtonGroup orientation={orientation}>
         <Button variant="ghost" size="sm">
           Left
         </Button>
@@ -237,7 +258,13 @@ export const Separator: Story = {
           Right
         </Button>
       </ButtonGroup>
-      <ButtonGroupSeparator orientation="vertical" />
+      <ButtonGroupSeparator
+        orientation={
+          orientation === "horizontal"
+            ? "vertical"
+            : "horizontal"
+        }
+      />
       <Button variant="ghost" size="sm">
         Share
       </Button>
@@ -248,11 +275,14 @@ export const Separator: Story = {
 export const Split: Story = {
   argTypes: {
     size: { control: false },
-    orientation: { control: false },
+    orientation: {
+      control: "inline-radio",
+      options: orientations,
+    },
   },
-  render: () => (
+  render: ({ orientation = "horizontal" }) => (
     <Popover>
-      <ButtonGroup orientation="horizontal">
+      <ButtonGroup orientation={orientation}>
         <Button>Schedule send</Button>
         <PopoverTrigger asChild>
           <Button aria-label="More schedule options">

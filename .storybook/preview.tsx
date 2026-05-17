@@ -1,7 +1,7 @@
 import type { Preview } from "@storybook/nextjs-vite"
 // @ts-ignore: side-effect import of CSS without type declarations
 import "../packages/orbit-ds/src/styles/globals.css"
-
+import { themes } from 'storybook/theming';
 const preview: Preview = {
   decorators: [
     (Story, context) => (

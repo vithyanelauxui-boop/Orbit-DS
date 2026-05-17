@@ -59,11 +59,15 @@ function LoginPreview({ direction }: { direction: "ltr" | "rtl" }) {
   )
 }
 
+type DirectionStoryArgs = {
+  variant?: "ltr" | "rtl" | "side-by-side"
+}
+
 const meta = {
   title: "Orbit DS/Direction",
   component: DirectionProvider,
   args: {
-    dir: "ltr",
+    variant: "ltr",
   },
   parameters: {
     layout: "padded",
@@ -76,28 +80,28 @@ Use the direction provider to switch shared UI between LTR and RTL layouts. This
     },
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof DirectionProvider>
+  argTypes: {
+    variant: {
+      control: "inline-radio",
+      options: ["ltr", "rtl", "side-by-side"],
+      description:
+        "Switches between left-to-right, right-to-left, and comparison layouts.",
+    },
+  },
+} satisfies Meta<DirectionStoryArgs>
 
 export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const LTR: Story = {
-  args: {},
-  render: () => <LoginPreview direction="ltr" />,
-}
-
-export const RTL: Story = {
-  args: {},
-  render: () => <LoginPreview direction="rtl" />,
-}
-
-export const SideBySide: Story = {
-  args: {},
-  render: () => (
-    <div className="grid gap-4 lg:grid-cols-2">
-      <LoginPreview direction="ltr" />
-      <LoginPreview direction="rtl" />
-    </div>
-  ),
+export const Direction: Story = {
+  render: ({ variant = "ltr" }) =>
+    variant === "side-by-side" ? (
+      <div className="grid gap-4 lg:grid-cols-2">
+        <LoginPreview direction="ltr" />
+        <LoginPreview direction="rtl" />
+      </div>
+    ) : (
+      <LoginPreview direction={variant} />
+    ),
 }

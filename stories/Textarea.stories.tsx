@@ -12,15 +12,28 @@ const meta = {
   title: "Orbit DS/Textarea",
   component: Textarea,
   parameters: {
-    layout: "padded",
+    layout: "centered",
     docs: {
       description: {
-        component:
-          "Use textareas for multi-line input such as descriptions, notes, and longer feedback.",
+        component: `
+Use textareas for multi-line input such as descriptions, notes, and longer feedback.
+
+## Parameter Properties
+
+- \`withLabel\`: Toggles the field label in the basic textarea example.
+        `,
       },
     },
   },
   tags: ["autodocs"],
+  argTypes: {
+    withLabel: {
+      control: "boolean",
+    },
+  },
+  args: {
+    withLabel: true,
+  },
 } satisfies Meta<typeof Textarea>
 
 export default meta
@@ -28,9 +41,14 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Basic: Story = {
-  render: () => (
+  parameters: {
+    controls: {
+      include: ["withLabel"],
+    },
+  },
+  render: ({ withLabel }) => (
     <Field className="max-w-lg">
-      <FieldLabel>Project summary</FieldLabel>
+      {withLabel ? <FieldLabel>Project summary</FieldLabel> : null}
       <Textarea placeholder="Describe the goal, audience, and release plan." />
     </Field>
   ),

@@ -34,19 +34,46 @@ const meta = {
     },
   },
   tags: ["autodocs"],
+  argTypes: {
+    side: {
+      control: "inline-radio",
+      options: ["right", "left", "top", "bottom"],
+      description: "Controls which edge the sheet slides in from.",
+      table: {
+        defaultValue: { summary: "right" },
+      },
+    },
+    showCloseButton: {
+      control: "boolean",
+      description: "Toggles the close button in the top-right corner.",
+      table: {
+        defaultValue: { summary: "true" },
+      },
+    },
+  },
+  args: {
+    side: "right",
+    showCloseButton: true,
+  },
 } satisfies Meta<typeof Sheet>
 
 export default meta
 
 type Story = StoryObj<typeof meta>
 
-function SettingsSheet({ side = "right" }: { side?: "top" | "right" | "bottom" | "left" }) {
+function SettingsSheet({
+  side = "right",
+  showCloseButton = true,
+}: {
+  side?: "top" | "right" | "bottom" | "left"
+  showCloseButton?: boolean
+}) {
   return (
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="outline">Open sheet</Button>
       </SheetTrigger>
-      <SheetContent side={side}>
+      <SheetContent side={side} showCloseButton={showCloseButton}>
         <SheetHeader>
           <SheetTitle>Workspace settings</SheetTitle>
           <SheetDescription>
@@ -77,18 +104,11 @@ function SettingsSheet({ side = "right" }: { side?: "top" | "right" | "bottom" |
   )
 }
 
-export const Right: Story = {
-  render: () => <SettingsSheet side="right" />,
-}
-
-export const Left: Story = {
-  render: () => <SettingsSheet side="left" />,
-}
-
-export const Top: Story = {
-  render: () => <SettingsSheet side="top" />,
-}
-
-export const Bottom: Story = {
-  render: () => <SettingsSheet side="bottom" />,
+export const Playground: Story = {
+  render: ({ side, showCloseButton }) => (
+    <SettingsSheet
+      side={side}
+      showCloseButton={showCloseButton}
+    />
+  ),
 }

@@ -12,7 +12,7 @@ import {
 } from "@orbit-ds"
 
 const meta = {
-  title: "Orbit DS/Popover",
+  title: "Components/Popover",
   component: Popover,
   parameters: {
     layout: "centered",

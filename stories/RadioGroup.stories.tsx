@@ -108,10 +108,11 @@ function RadioGroupPreview({
 }
 
 const meta = {
-  title: "Orbit DS/Radio Group",
+  title: "Components/Radio Group",
   component: RadioGroupPreview,
 
   parameters: {
+    layout: "centered",
     docs: {
       description: {
         component: `

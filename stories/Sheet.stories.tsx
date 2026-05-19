@@ -22,8 +22,8 @@ const sections = [
 ]
 
 const meta = {
-  title: "Orbit DS/Sheet",
-  component: Sheet,
+  title: "Components/Sheet",
+  component: SettingsSheet,
   parameters: {
     layout: "centered",
     docs: {
@@ -55,7 +55,7 @@ const meta = {
     side: "right",
     showCloseButton: true,
   },
-} satisfies Meta<typeof Sheet>
+} satisfies Meta<typeof SettingsSheet>
 
 export default meta
 

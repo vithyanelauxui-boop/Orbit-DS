@@ -31,10 +31,11 @@ function ProgressPreview({
 }
 
 const meta = {
-  title: "Orbit DS/Progress",
+  title: "Components/Progress",
   component: ProgressPreview,
 
   parameters: {
+    layout: "centered",
     docs: {
       description: {
         component: `

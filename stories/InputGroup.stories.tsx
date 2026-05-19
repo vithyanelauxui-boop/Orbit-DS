@@ -44,12 +44,12 @@ function StoryFrame({
 }
 
 const meta = {
-  title: "Orbit DS/Input Group",
+  title: "Components/Input Group",
 
   component: InputGroup,
 
   parameters: {
-    layout: "fullscreen",
+    layout: "centered",
 
     docs: {
       description: {

@@ -81,10 +81,10 @@ function MultiComboboxPreview() {
 }
 
 const meta = {
-  title: "Orbit DS/Combobox",
+  title: "Components/Combobox",
   component: SingleComboboxPreview,
   parameters: {
-    layout: "padded",
+    layout: "centered",
     docs: {
       description: {
         component: `
@@ -185,3 +185,4 @@ export const EmptyState: Story = {
     </div>
   ),
 }
+

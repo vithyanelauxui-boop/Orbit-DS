@@ -9,6 +9,7 @@ const variants = [
   "outline",
   "ghost",
 ] as const
+import { CheckCircleIcon } from "@orbit-ds"
 
 const badgeSizes = ["sm", "default", "lg"] as const
 
@@ -22,36 +23,7 @@ const customColorPresets = {
 
 function BadgeCheckIcon({ size = 12 }: { size?: number }) {
   return (
-    <svg
-      aria-hidden="true"
-      width={size}
-      height={size}
-      viewBox="0 0 16 16"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <circle
-        cx="8"
-        cy="8"
-        r="6"
-        fill="currentColor"
-        opacity="0.2"
-      />
-      <path
-        d="M5 8.2 7 10l4-4"
-        stroke="currentColor"
-        strokeWidth="1.75"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <circle
-        cx="8"
-        cy="8"
-        r="6"
-        stroke="currentColor"
-        strokeWidth="1.25"
-      />
-    </svg>
+    <CheckCircleIcon size={size} />
   )
 }
 
@@ -131,10 +103,10 @@ function BadgePreview({
 }
 
 const meta = {
-  title: "Orbit DS/Badge",
+  title: "Components/Badge",
   component: BadgePreview,
   parameters: {
-    layout: "fullscreen",
+    layout: "centered",
     docs: {
       description: {
         component: `

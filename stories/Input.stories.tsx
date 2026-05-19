@@ -71,13 +71,99 @@ function StoryFrame({
   )
 }
 
-const meta = {
-  title: "Orbit DS/Input",
+type InputStoryArgs = React.ComponentProps<typeof Input> & {
+  invalid?: boolean
+  withLabel?: boolean
+  withDescription?: boolean
+  withIcon?: boolean
+  withButton?: boolean
+}
 
-  component: Input,
+function renderInputStory({
+  type,
+  placeholder,
+  disabled,
+  invalid,
+  withLabel,
+  withDescription,
+  withIcon,
+  withButton,
+}: InputStoryArgs) {
+  return (
+    <StoryFrame>
+      <Field data-invalid={invalid}>
+        {withLabel ? (
+          <FieldLabel htmlFor="basic-input">
+            Email address
+          </FieldLabel>
+        ) : null}
+
+        {withIcon || withButton ? (
+          <InputGroup>
+            {withIcon ? (
+              <InputGroupAddon align="inline-start">
+                <InputGroupText>
+                  {type === "email" ? (
+                    <MailIcon />
+                  ) : (
+                    <SearchIcon />
+                  )}
+                </InputGroupText>
+              </InputGroupAddon>
+            ) : null}
+
+            <InputGroupInput
+              id="basic-input"
+              type={type}
+              placeholder={placeholder}
+              disabled={disabled}
+              aria-invalid={invalid}
+            />
+
+            {withButton ? (
+              <InputGroupAddon align="inline-end">
+                <Button size="sm">
+                  Send
+                </Button>
+              </InputGroupAddon>
+            ) : null}
+          </InputGroup>
+        ) : (
+          <Input
+            id="basic-input"
+            type={type}
+            placeholder={placeholder}
+            disabled={disabled}
+            aria-invalid={invalid}
+          />
+        )}
+
+        {invalid ? (
+          <FieldError>
+            Invalid input value.
+          </FieldError>
+        ) : withDescription ? (
+          <FieldDescription>
+            Used for notifications and
+            account access.
+          </FieldDescription>
+        ) : null}
+      </Field>
+    </StoryFrame>
+  )
+}
+
+function InputStoryPreview(props: InputStoryArgs) {
+  return renderInputStory(props)
+}
+
+const meta = {
+  title: "Components/Input",
+
+  component: InputStoryPreview,
 
   parameters: {
-    layout: "fullscreen",
+    layout: "centered",
 
     docs: {
       description: {
@@ -155,84 +241,14 @@ and standard single-field forms.
     withIcon: false,
     withButton: false,
   },
-} satisfies Meta<typeof Input>
+} satisfies Meta<typeof InputStoryPreview>
 
 export default meta
 
 type Story = StoryObj<typeof meta>
 
 export const Basic: Story = {
-  render: ({
-    type,
-    placeholder,
-    disabled,
-    invalid,
-    withLabel,
-    withDescription,
-    withIcon,
-    withButton,
-  }) => (
-    <StoryFrame>
-      <Field data-invalid={invalid}>
-        {withLabel ? (
-          <FieldLabel htmlFor="basic-input">
-            Email address
-          </FieldLabel>
-        ) : null}
-
-        {withIcon || withButton ? (
-          <InputGroup>
-            {withIcon ? (
-              <InputGroupAddon align="inline-start">
-                <InputGroupText>
-                  {type === "email" ? (
-                    <MailIcon />
-                  ) : (
-                    <SearchIcon />
-                  )}
-                </InputGroupText>
-              </InputGroupAddon>
-            ) : null}
-
-            <InputGroupInput
-              id="basic-input"
-              type={type}
-              placeholder={placeholder}
-              disabled={disabled}
-              aria-invalid={invalid}
-            />
-
-            {withButton ? (
-              <InputGroupAddon align="inline-end">
-                <Button size="sm">
-                  Send
-                </Button>
-              </InputGroupAddon>
-            ) : null}
-          </InputGroup>
-        ) : (
-          <Input
-            id="basic-input"
-            type={type}
-            placeholder={placeholder}
-            disabled={disabled}
-            aria-invalid={invalid}
-          />
-        )}
-
-        {invalid ? (
-          <FieldError>
-            Invalid input value.
-          </FieldError>
-        ) : withDescription ? (
-          <FieldDescription>
-            Used for notifications and
-            account access.
-          </FieldDescription>
-        ) : null}
-      </Field>
-    </StoryFrame>
-  ),
+  render: renderInputStory,
 }
 
 export const Disabled: Story = {
@@ -243,9 +259,7 @@ export const Disabled: Story = {
     withDescription: true,
   },
 
-  render: (args) => (
-    <Basic.render {...args} />
-  ),
+  render: renderInputStory,
 }
 
 export const Invalid: Story = {
@@ -256,9 +270,7 @@ export const Invalid: Story = {
     withDescription: false,
   },
 
-  render: (args) => (
-    <Basic.render {...args} />
-  ),
+  render: renderInputStory,
 }
 
 export const WithIcon: Story = {
@@ -268,9 +280,7 @@ export const WithIcon: Story = {
     placeholder: "Search components",
   },
 
-  render: (args) => (
-    <Basic.render {...args} />
-  ),
+  render: renderInputStory,
 }
 
 export const WithButton: Story = {
@@ -279,9 +289,7 @@ export const WithButton: Story = {
     placeholder: "Enter email",
   },
 
-  render: (args) => (
-    <Basic.render {...args} />
-  ),
+  render: renderInputStory,
 }
 
 export const Types: Story = {

@@ -70,10 +70,10 @@ function ButtonGroupPreview({
 }
 
 const meta = {
-  title: "Orbit DS/Button Group",
+  title: "Components/Button Group",
   component: ButtonGroupPreview,
   parameters: {
-    layout: "fullscreen",
+    layout: "centered",
     docs: {
       description: {
         component: `

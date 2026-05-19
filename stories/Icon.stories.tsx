@@ -31,10 +31,10 @@ function IconFrame({
 }
 
 const meta = {
-  title: "Orbit DS/Icon",
+  title: "Components/Icon",
   component: Icon,
   parameters: {
-    layout: "fullscreen",
+    layout: "centered",
     docs: {
       description: {
         component: `

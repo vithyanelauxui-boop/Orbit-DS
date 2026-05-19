@@ -13,7 +13,7 @@ export function DropHalfIcon({
         <svg
           width={size}
           height={size}
-          viewBox="0 0 24 24"
+          viewBox="0 0 256 256"
           fill="currentColor"
           xmlns="http://www.w3.org/2000/svg"
           {...props}
@@ -101,7 +101,7 @@ export function DropHalfIcon({
         <svg
           width={size}
           height={size}
-          viewBox="0 0 24 24"
+          viewBox="0 0 256 256"
           fill="currentColor"
           xmlns="http://www.w3.org/2000/svg"
           {...props}
@@ -116,7 +116,7 @@ export function DropHalfIcon({
         <svg
           width={size}
           height={size}
-          viewBox="0 0 24 24"
+          viewBox="0 0 256 256"
           fill="currentColor"
           xmlns="http://www.w3.org/2000/svg"
           {...props}
@@ -182,7 +182,7 @@ export function DropHalfIcon({
         <svg
           width={size}
           height={size}
-          viewBox="0 0 24 24"
+          viewBox="0 0 256 256"
           fill="currentColor"
           xmlns="http://www.w3.org/2000/svg"
           {...props}

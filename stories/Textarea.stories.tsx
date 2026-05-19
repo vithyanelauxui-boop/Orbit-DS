@@ -8,9 +8,24 @@ import {
   Textarea,
 } from "@orbit-ds"
 
+type TextareaStoryArgs = {
+  withLabel?: boolean
+}
+
+function TextareaStoryPreview({
+  withLabel = true,
+}: TextareaStoryArgs) {
+  return (
+    <Field className="max-w-lg">
+      {withLabel ? <FieldLabel>Project summary</FieldLabel> : null}
+      <Textarea placeholder="Describe the goal, audience, and release plan." />
+    </Field>
+  )
+}
+
 const meta = {
-  title: "Orbit DS/Textarea",
-  component: Textarea,
+  title: "Components/Textarea",
+  component: TextareaStoryPreview,
   parameters: {
     layout: "centered",
     docs: {
@@ -34,7 +49,7 @@ Use textareas for multi-line input such as descriptions, notes, and longer feedb
   args: {
     withLabel: true,
   },
-} satisfies Meta<typeof Textarea>
+} satisfies Meta<typeof TextareaStoryPreview>
 
 export default meta
 
@@ -46,12 +61,7 @@ export const Basic: Story = {
       include: ["withLabel"],
     },
   },
-  render: ({ withLabel }) => (
-    <Field className="max-w-lg">
-      {withLabel ? <FieldLabel>Project summary</FieldLabel> : null}
-      <Textarea placeholder="Describe the goal, audience, and release plan." />
-    </Field>
-  ),
+  render: (args) => <TextareaStoryPreview {...args} />,
 }
 
 export const WithDescription: Story = {

@@ -11,10 +11,10 @@ import {
 } from "@orbit-ds"
 
 const meta = {
-  title: "Orbit DS/Navigation Menu",
+  title: "Components/Navigation Menu",
   component: NavigationMenu,
   parameters: {
-    layout: "padded",
+    layout: "centered",
     docs: {
       description: {
         component: `

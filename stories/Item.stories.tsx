@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import Image from "next/image"
 
 import {
   Avatar,
@@ -20,6 +21,8 @@ import {
   ItemSeparator,
   ItemTitle,
 } from "@orbit-ds"
+
+import avatarImage from "./Avatar.jpg"
 
 function StarIcon() {
   return (
@@ -50,10 +53,10 @@ type ItemStoryArgs = {
 }
 
 const meta = {
-  title: "Orbit DS/Item",
+  title: "Components/Item",
   component: Item,
   parameters: {
-    layout: "fullscreen",
+    layout: "centered",
     docs: {
       description: {
         component: `
@@ -191,9 +194,12 @@ export const WithImage: Story = {
   render: () => (
     <Item variant="outline" className="max-w-xl">
       <ItemMedia variant="image">
-        <img
-          src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=320&q=80"
+        <Image
+          src={avatarImage}
           alt="Workspace desk"
+          width={320}
+          height={240}
+          className="h-full w-full object-cover"
         />
       </ItemMedia>
       <ItemContent>

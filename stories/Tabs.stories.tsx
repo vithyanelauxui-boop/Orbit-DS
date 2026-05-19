@@ -55,7 +55,7 @@ function TabsPreview({
 }
 
 const meta = {
-  title: "Orbit DS/Tabs",
+  title: "Components/Tabs",
   component: TabsPreview,
   parameters: {
     layout: "centered",

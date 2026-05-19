@@ -53,17 +53,33 @@ function ClockIcon() {
   )
 }
 
-function DateButton({ label }: { label: string }) {
+const DateButton = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<typeof Button> & {
+    label: string
+  }
+>(function DateButton(
+  { label, className, children, ...props },
+  ref,
+) {
   return (
     <Button
+      ref={ref}
       variant="outline"
-      className="min-w-56 justify-start font-normal"
+      className={[
+        "min-w-56 justify-start font-normal",
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      {...props}
     >
       <CalendarIcon />
       {label}
+      {children}
     </Button>
   )
-}
+})
 
 type CalendarBasicArgs = {
   showOutsideDays?: boolean
@@ -268,14 +284,6 @@ function BookedDatesPreview({
 
   return (
     <div className="grid gap-3">
-      <div className="flex flex-wrap gap-2 text-sm text-muted-foreground">
-        <span className="rounded-full bg-destructive/10 px-2 py-1 text-destructive">
-          01
-        </span>
-
-        <span>02</span>
-      </div>
-
       <div className="rounded-xl border">
         <Calendar
           mode="single"
@@ -402,12 +410,12 @@ function WeekNumbersPreview({
 }
 
 const meta: Meta<CalendarStoryArgs> = {
-  title: "Orbit DS/Calendar",
+  title: "Components/Calendar",
 
   component: BasicCalendarPreview,
 
   parameters: {
-    layout: "fullscreen",
+    layout: "centered",
 
     docs: {
       description: {

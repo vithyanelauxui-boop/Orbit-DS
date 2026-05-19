@@ -1,11 +1,7 @@
-import * as React from "react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import {
-  Button,
   Command,
-  CommandDialog,
-  CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
@@ -29,27 +25,50 @@ function SearchIcon() {
   )
 }
 
-const meta = {
-  title: "Orbit DS/Command",
-  component: Command,
-  parameters: {
-    layout: "padded",
-    docs: {
-      description: {
-        component: `
-Use command surfaces for fast search, keyboard-first actions, global navigation, and compact launchers.
-        `,
-      },
-    },
-  },
-  tags: ["autodocs"],
-} satisfies Meta<typeof Command>
+function BasicCommandSurface() {
+  return (
+    <Command className="max-w-xl rounded-xl border">
+      <CommandInput placeholder="Search pages, components, and actions..." />
+      <CommandList>
+        <CommandItem>
+          <SearchIcon />
+          Search docs
+        </CommandItem>
+        <CommandItem>
+          <SearchIcon />
+          Open components
+        </CommandItem>
+        <CommandItem>Invite teammate</CommandItem>
+      </CommandList>
+    </Command>
+  )
+}
 
-export default meta
+function ShortcutsCommandSurface() {
+  return (
+    <Command className="max-w-xl rounded-xl border">
+      <CommandInput placeholder="Search pages, components, and actions..." />
+      <CommandList>
+        <CommandItem>
+          <SearchIcon />
+          Search docs
+          <CommandShortcut>Cmd+K</CommandShortcut>
+        </CommandItem>
+        <CommandItem>
+          <SearchIcon />
+          Open components
+          <CommandShortcut>G C</CommandShortcut>
+        </CommandItem>
+        <CommandItem>
+          Publish release
+          <CommandShortcut>Shift+P</CommandShortcut>
+        </CommandItem>
+      </CommandList>
+    </Command>
+  )
+}
 
-type Story = StoryObj<typeof meta>
-
-function CommandSurface() {
+function GroupsCommandSurface() {
   return (
     <Command className="max-w-xl rounded-xl border">
       <CommandInput placeholder="Search pages, components, and actions..." />
@@ -58,7 +77,7 @@ function CommandSurface() {
           <CommandItem>
             <SearchIcon />
             Search docs
-            <CommandShortcut>⌘K</CommandShortcut>
+            <CommandShortcut>Cmd+K</CommandShortcut>
           </CommandItem>
           <CommandItem>
             <SearchIcon />
@@ -77,41 +96,66 @@ function CommandSurface() {
   )
 }
 
-export const Basic: Story = {
-  render: () => <CommandSurface />,
-}
-
-export const EmptyState: Story = {
-  render: () => (
+function ScrollableCommandSurface() {
+  return (
     <Command className="max-w-xl rounded-xl border">
-      <CommandInput value="billing" />
-      <CommandList>
-        <CommandEmpty>No matching commands found.</CommandEmpty>
+      <CommandInput placeholder="Search pages, components, and actions..." />
+      <CommandList className="max-h-72">
+        <CommandGroup heading="Pages">
+          <CommandItem>Dashboard</CommandItem>
+          <CommandItem>Components</CommandItem>
+          <CommandItem>Tokens</CommandItem>
+          <CommandItem>Patterns</CommandItem>
+          <CommandItem>Accessibility</CommandItem>
+          <CommandItem>Release notes</CommandItem>
+        </CommandGroup>
+        <CommandSeparator />
+        <CommandGroup heading="Actions">
+          <CommandItem>Create release</CommandItem>
+          <CommandItem>Invite teammate</CommandItem>
+          <CommandItem>Export tokens</CommandItem>
+          <CommandItem>Open changelog</CommandItem>
+          <CommandItem>View analytics</CommandItem>
+          <CommandItem>Manage billing</CommandItem>
+          <CommandItem>Archive project</CommandItem>
+        </CommandGroup>
       </CommandList>
     </Command>
-  ),
+  )
 }
 
-export const DialogPalette: Story = {
-  render: () => {
-    const [open, setOpen] = React.useState(false)
-
-    return (
-      <>
-        <Button onClick={() => setOpen(true)}>Open command palette</Button>
-        <CommandDialog open={open} onOpenChange={setOpen}>
-          <Command>
-            <CommandInput placeholder="Type a command or search..." />
-            <CommandList>
-              <CommandGroup heading="Quick actions">
-                <CommandItem>Go to dashboard</CommandItem>
-                <CommandItem>Create release note</CommandItem>
-                <CommandItem>Open accessibility report</CommandItem>
-              </CommandGroup>
-            </CommandList>
-          </Command>
-        </CommandDialog>
-      </>
-    )
+const meta = {
+  title: "Components/Command",
+  component: BasicCommandSurface,
+  parameters: {
+    layout: "centered",
+    docs: {
+      description: {
+        component: `
+Use command surfaces for fast search, keyboard-first actions, global navigation, and compact launchers.
+        `,
+      },
+    },
   },
+  tags: ["autodocs"],
+} satisfies Meta<typeof BasicCommandSurface>
+
+export default meta
+
+type Story = StoryObj<typeof meta>
+
+export const Basic: Story = {
+  render: () => <BasicCommandSurface />,
+}
+
+export const Shortcuts: Story = {
+  render: () => <ShortcutsCommandSurface />,
+}
+
+export const Groups: Story = {
+  render: () => <GroupsCommandSurface />,
+}
+
+export const Scrollable: Story = {
+  render: () => <ScrollableCommandSurface />,
 }

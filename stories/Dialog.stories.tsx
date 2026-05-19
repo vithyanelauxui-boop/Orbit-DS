@@ -1,8 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
+import { Button } from "@orbit-ds"
+
 import {
-  Button,
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -13,31 +15,49 @@ import {
 
 type DialogStoryArgs = {
   showCloseButton?: boolean
+  scrollableContent?: boolean
+  stickyFooter?: boolean
+}
+
+function LongContent() {
+  return (
+    <>
+      {Array.from({ length: 20 }).map((_, index) => (
+        <p key={index} className="mb-4 leading-normal text-muted-foreground">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat.
+        </p>
+      ))}
+    </>
+  )
 }
 
 const meta = {
-  title: "Orbit DS/Dialog",
-  component: Dialog,
+  title: "Components/Dialog",
   parameters: {
     layout: "centered",
-    docs: {
-      description: {
-        component: `
-Use dialogs for focused tasks, confirmations, settings forms, and interruption-worthy flows that deserve a modal surface.
-        `,
-      },
-    },
   },
   tags: ["autodocs"],
   argTypes: {
     showCloseButton: {
       control: "boolean",
-      description:
-        "Shows or hides the footer close button in dialog examples.",
+      description: "Shows or hides the top-right close button.",
+    },
+    scrollableContent: {
+      control: "boolean",
+      description: "Makes dialog body scrollable.",
+    },
+    stickyFooter: {
+      control: "boolean",
+      description: "Keeps footer visible while content scrolls.",
     },
   },
   args: {
     showCloseButton: true,
+    scrollableContent: true,
+    stickyFooter: true,
   },
 } satisfies Meta<DialogStoryArgs>
 
@@ -45,113 +65,137 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-function DialogShell({
-  trigger,
-  title,
-  description,
-  contentClassName,
-  compact = false,
-  showCloseButton = true,
-}: {
-  trigger: string
-  title: string
-  description: string
-  contentClassName?: string
-  compact?: boolean
-  showCloseButton?: boolean
-}) {
-  return (
+export const CustomCloseButton: Story = {
+  render: ({ showCloseButton = true }) => (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>{trigger}</Button>
+        <Button variant="outline">Share</Button>
       </DialogTrigger>
-      <DialogContent className={contentClassName}>
-        <DialogHeader className={compact ? "gap-1" : undefined}>
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
+
+      <DialogContent
+        className="sm:max-w-md"
+        showCloseButton={showCloseButton}
+      >
+        <DialogHeader>
+          <DialogTitle>Share link</DialogTitle>
+
+          <DialogDescription>
+            Anyone who has this link will be able to view this.
+          </DialogDescription>
         </DialogHeader>
-        <DialogFooter showCloseButton={showCloseButton}>
+
+        <div className="rounded-md border p-3 text-sm">
+          https://orbit-ds.dev/docs/dialog
+        </div>
+
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button variant="outline">Close</Button>
+          </DialogClose>
+
+          <Button>Copy Link</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  ),
+}
+
+export const NoCloseButton: Story = {
+  render: () => (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline">No Close Button</Button>
+      </DialogTrigger>
+
+      <DialogContent showCloseButton={false}>
+        <DialogHeader>
+          <DialogTitle>No Close Button</DialogTitle>
+
+          <DialogDescription>
+            This dialog has no close button in the header or footer.
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="text-sm text-muted-foreground">
+          Users can dismiss this dialog using outside click or escape key.
+        </div>
+      </DialogContent>
+    </Dialog>
+  ),
+}
+
+export const ScrollableContent: Story = {
+  render: ({
+    showCloseButton = true,
+    scrollableContent = true,
+  }) => (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline">Scrollable Content</Button>
+      </DialogTrigger>
+
+      <DialogContent
+        className="sm:max-w-lg"
+        showCloseButton={showCloseButton}
+      >
+        <DialogHeader>
+          <DialogTitle>Scrollable Content</DialogTitle>
+
+          <DialogDescription>
+            This dialog demonstrates scrollable content.
+          </DialogDescription>
+        </DialogHeader>
+
+        <div
+          className={
+            scrollableContent
+              ? "-mx-4 max-h-[50vh] overflow-y-auto px-4"
+              : "-mx-4 px-4"
+          }
+        >
+          <LongContent />
+        </div>
+      </DialogContent>
+    </Dialog>
+  ),
+}
+
+export const StickyFooter = ({
+  showCloseButton = true,
+  stickyFooter = true,
+}: {
+  showCloseButton?: boolean;
+  stickyFooter?: boolean;
+}) => (
+  <Dialog>
+    <DialogTrigger asChild>
+      <Button variant="outline">Sticky Footer</Button>
+    </DialogTrigger>
+
+    <DialogContent
+      className="flex flex-col sm:max-w-lg max-h-[80vh]"
+      showCloseButton={showCloseButton}
+    >
+      <DialogHeader>
+        <DialogTitle>Sticky Footer</DialogTitle>
+        <DialogDescription>
+          This dialog has a sticky footer that stays visible while the content
+          scrolls.
+        </DialogDescription>
+      </DialogHeader>
+
+      <div className="flex-1 overflow-y-auto -mx-4 px-4 min-h-0">
+        <LongContent />
+      </div>
+
+      {stickyFooter && (
+        <DialogFooter className="pt-4">
+          <DialogClose asChild>
+            <Button variant="outline">Close</Button>
+          </DialogClose>
           <Button>Continue</Button>
         </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  )
-}
-
-export const Basic: Story = {
-  render: ({ showCloseButton = true }) => (
-    <DialogShell
-      trigger="Open dialog"
-      title="Invite teammates"
-      description="Share a secure workspace link so your team can review components and release notes."
-      showCloseButton={showCloseButton}
-    />
-  ),
-}
-
-export const Small: Story = {
-  render: ({ showCloseButton = true }) => (
-    <DialogShell
-      trigger="Open small dialog"
-      title="Save draft?"
-      description="Your changes will remain private until you publish."
-      contentClassName="sm:max-w-xs"
-      compact
-      showCloseButton={showCloseButton}
-    />
-  ),
-}
-
-export const Responsive: Story = {
-  render: ({ showCloseButton = true }) => (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline">Open responsive dialog</Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-lg">
-        <DialogHeader>
-          <DialogTitle>Share release update</DialogTitle>
-          <DialogDescription>
-            Send a quick summary to reviewers before the release moves to
-            published.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="grid gap-3 text-sm text-muted-foreground sm:grid-cols-2">
-          <div className="rounded-lg border p-3">
-            <div className="font-medium text-foreground">Audience</div>
-            <div>Design, engineering, and QA reviewers</div>
-          </div>
-          <div className="rounded-lg border p-3">
-            <div className="font-medium text-foreground">Timing</div>
-            <div>Send immediately or schedule for tomorrow morning</div>
-          </div>
-        </div>
-        <DialogFooter showCloseButton={showCloseButton}>
-          <Button>Send update</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  ),
-}
-
-export const Destructive: Story = {
-  render: ({ showCloseButton = true }) => (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="destructive">Delete project</Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-sm">
-        <DialogHeader>
-          <DialogTitle>Delete project?</DialogTitle>
-          <DialogDescription>
-            This action permanently removes the project, drafts, and activity
-            history.
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter showCloseButton={showCloseButton}>
-          <Button variant="destructive">Delete</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  ),
-}
+      )}
+    </DialogContent>
+  </Dialog>
+);

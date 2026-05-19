@@ -1,11 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import {
-  Badge,
   Checkbox,
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableFooter,
   TableHead,
@@ -24,11 +22,18 @@ const rows = [
   },
 ] as const
 
+type TableStoryArgs = {
+  header: boolean
+  footer: boolean
+  selection: boolean
+  pagination: boolean
+}
+
 const meta = {
-  title: "Orbit DS/Data Table",
+  title: "Components/Data Table",
   component: Table,
   parameters: {
-    layout: "padded",
+    layout: "centered",
     docs: {
       description: {
         component: `
@@ -38,104 +43,193 @@ Use data tables for structured records, invoices, activity logs, and selection-h
     },
   },
   tags: ["autodocs"],
+
+  args: {
+    header: true,
+    footer: false,
+    selection: false,
+    pagination: false,
+  },
+
+  argTypes: {
+    header: {
+      control: "boolean",
+    },
+    footer: {
+      control: "boolean",
+    },
+    selection: {
+      control: "boolean",
+    },
+    pagination: {
+      control: "boolean",
+    },
+  },
 } satisfies Meta<typeof Table>
 
 export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Basic: Story = {
-  render: () => (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Invoice</TableHead>
-          <TableHead>Customer</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead className="text-right">Amount</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {rows.map((row) => (
-          <TableRow key={row.id}>
-            <TableCell className="font-medium">{row.id}</TableCell>
-            <TableCell>{row.customer}</TableCell>
-            <TableCell>{row.status}</TableCell>
-            <TableCell className="text-right">{row.amount}</TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
-  ),
+function DataTableStory({
+  header,
+  footer,
+  selection,
+  pagination,
+}: TableStoryArgs) {
+  const paginatedRows = [
+    ...rows,
+    {
+      id: "INV-1004",
+      customer: "Pixel Works",
+      status: "Paid",
+      amount: "$740",
+    },
+    {
+      id: "INV-1005",
+      customer: "Nova Systems",
+      status: "Pending",
+      amount: "$1,920",
+    },
+  ]
+
+  const data = pagination ? paginatedRows : rows
+
+  return (
+    <div className="w-3xl space-y-4">
+      <Table>
+        {header && (
+          <TableHeader>
+            <TableRow className="bg-muted">
+              {selection && (
+                <TableHead className="w-10">
+                  <Checkbox aria-label="Select all rows" />
+                </TableHead>
+              )}
+
+              <TableHead className={!selection ? "rounded-tl-md" : undefined}>
+                Invoice
+              </TableHead>
+
+              <TableHead>Customer</TableHead>
+
+              <TableHead>Status</TableHead>
+
+              <TableHead className="rounded-tr-md text-right">
+                Amount
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+        )}
+
+        <TableBody>
+          {data.map((row, index) => (
+            <TableRow
+              key={row.id}
+              data-state={selection && index === 0 ? "selected" : undefined}
+            >
+              {selection && (
+                <TableCell>
+                  <Checkbox
+                    aria-label={`Select ${row.id}`}
+                    checked={index === 0}
+                  />
+                </TableCell>
+              )}
+
+              <TableCell className="font-medium">{row.id}</TableCell>
+              <TableCell>{row.customer}</TableCell>
+              <TableCell>{row.status}</TableCell>
+              <TableCell className="text-right">{row.amount}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+
+        {footer && (
+          <TableFooter>
+            <TableRow>
+              <TableCell colSpan={selection ? 4 : 3}>Total</TableCell>
+              <TableCell className="text-right">
+                {pagination ? "$6,940" : "$4,280"}
+              </TableCell>
+            </TableRow>
+          </TableFooter>
+        )}
+      </Table>
+
+      {pagination && (
+        <div className="flex items-center justify-between border-t pt-4">
+          <p className="text-muted-foreground text-sm">
+            Showing 1–5 of 12 invoices
+          </p>
+
+          <div className="flex items-center gap-2">
+            <button className="border-input bg-background hover:bg-muted inline-flex h-9 items-center rounded-md border px-3 text-sm">
+              Previous
+            </button>
+
+            <button className="bg-primary text-primary-foreground inline-flex h-9 min-w-9 items-center justify-center rounded-md px-3 text-sm">
+              1
+            </button>
+
+            <button className="border-input bg-background hover:bg-muted inline-flex h-9 min-w-9 items-center justify-center rounded-md border px-3 text-sm">
+              2
+            </button>
+
+            <button className="border-input bg-background hover:bg-muted inline-flex h-9 items-center rounded-md border px-3 text-sm">
+              Next
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  )
 }
 
-export const WithSelection: Story = {
-  render: () => (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-10">
-            <Checkbox aria-label="Select all rows" />
-          </TableHead>
-          <TableHead>Project</TableHead>
-          <TableHead>Owner</TableHead>
-          <TableHead>Status</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        <TableRow data-state="selected">
-          <TableCell>
-            <Checkbox aria-label="Select Orbit DS" checked />
-          </TableCell>
-          <TableCell className="font-medium">Orbit DS</TableCell>
-          <TableCell>Ananya Rao</TableCell>
-          <TableCell>
-            <Badge>In review</Badge>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>
-            <Checkbox aria-label="Select Dashboard" />
-          </TableCell>
-          <TableCell className="font-medium">Dashboard refresh</TableCell>
-          <TableCell>Dev Malik</TableCell>
-          <TableCell>
-            <Badge variant="secondary">Draft</Badge>
-          </TableCell>
-        </TableRow>
-      </TableBody>
-    </Table>
-  ),
+export const Basic: Story = {
+  args: {
+    header: true,
+    footer: false,
+    selection: false,
+    pagination: false,
+  },
+
+  render: (args) => <DataTableStory {...args} />,
+}
+
+export const Indexed: Story = {
+  args: {
+    header: true,
+    footer: false,
+    selection: true,
+    pagination: false,
+  },
+
+  render: (args) => <DataTableStory {...args} />,
 }
 
 export const WithFooter: Story = {
-  render: () => (
-    <Table>
-      <TableCaption>
-        Quarterly invoice summary for the current workspace.
-      </TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Invoice</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead className="text-right">Amount</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {rows.map((row) => (
-          <TableRow key={row.id}>
-            <TableCell>{row.id}</TableCell>
-            <TableCell>{row.status}</TableCell>
-            <TableCell className="text-right">{row.amount}</TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-      <TableFooter>
-        <TableRow>
-          <TableCell colSpan={2}>Total</TableCell>
-          <TableCell className="text-right">$4,280</TableCell>
-        </TableRow>
-      </TableFooter>
-    </Table>
+  args: {
+    header: true,
+    footer: true,
+    selection: false,
+    pagination: false,
+  },
+
+  render: (args) => (
+    <div className="w-3xl">
+      <DataTableStory {...args} />
+    </div>
   ),
+}
+
+export const Pagination: Story = {
+  args: {
+    header: true,
+    footer: false,
+    selection: false,
+    pagination: true,
+  },
+
+  render: (args) => <DataTableStory {...args} />,
 }

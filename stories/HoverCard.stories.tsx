@@ -11,7 +11,7 @@ import {
 } from "@orbit-ds"
 
 const meta = {
-  title: "Orbit DS/Hover Card",
+  title: "Components/Hover Card",
   component: HoverCard,
   parameters: {
     layout: "centered",

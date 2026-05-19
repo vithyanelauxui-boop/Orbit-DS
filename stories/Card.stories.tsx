@@ -25,7 +25,7 @@ function CardPreview({
   showAction = false,
 }: CardStoryArgs) {
   return (
-    <Card size={size} className="max-w-sm">
+    <Card size={size} className="w-full max-w-lg">
       {showHeader ? (
         <CardHeader className={showAction ? "border-b" : undefined}>
           <CardTitle>Launch checklist</CardTitle>
@@ -66,18 +66,14 @@ function CardWithImagePreview({
   showAction = false,
 }: CardStoryArgs) {
   return (
-    <Card size={size} className="max-w-sm overflow-hidden">
+    <Card size={size} className="w-full max-w-md overflow-hidden">
       <img
         src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80"
         alt="Workspace desk with notebook and keyboard"
         className="h-44 w-full object-cover"
       />
       {showHeader ? (
-        <CardHeader>
-          <CardTitle>Workspace refresh</CardTitle>
-          <CardDescription>
-            A visual card with edge-to-edge media for featured content and editorial layouts.
-          </CardDescription>
+        <CardHeader className={showAction ? "border-b" : undefined}>
           {showAction ? (
             <CardAction>
               <Button variant="outline" size="sm">
@@ -85,6 +81,10 @@ function CardWithImagePreview({
               </Button>
             </CardAction>
           ) : null}
+          <CardTitle>Workspace refresh</CardTitle>
+          <CardDescription>
+            A visual card with edge-to-edge media for featured content and editorial layouts.
+          </CardDescription>
         </CardHeader>
       ) : null}
       {!showHeader ? (
@@ -106,10 +106,10 @@ function CardWithImagePreview({
 }
 
 const meta = {
-  title: "Orbit DS/Card",
+  title: "Components/Card",
   component: CardPreview,
   parameters: {
-    layout: "fullscreen",
+    layout: "centered",
     docs: {
       description: {
         component: `

@@ -34,6 +34,34 @@ type DatePickerStoryArgs = {
   withIcon?: boolean
 }
 
+function DatePickerPreview({
+  withIcon = true,
+}: DatePickerStoryArgs) {
+  const [date, setDate] = React.useState<Date | undefined>(startOfToday())
+  const [open, setOpen] = React.useState(false)
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <TriggerButton
+          withIcon={withIcon}
+          label={date ? format(date, "MMM d, yyyy") : "Pick a date"}
+        />
+      </PopoverTrigger>
+      <PopoverContent className="w-auto p-0">
+        <Calendar
+          mode="single"
+          selected={date}
+          onSelect={(value) => {
+            setDate(value)
+            if (value) setOpen(false)
+          }}
+        />
+      </PopoverContent>
+    </Popover>
+  )
+}
+
 const TriggerButton = React.forwardRef<
   HTMLButtonElement,
   React.ComponentProps<typeof Button> & {
@@ -76,10 +104,12 @@ const TriggerButton = React.forwardRef<
 })
 
 const meta = {
-  title: "Orbit DS/Date Picker",
-  component: Calendar,
+  title: "Components/Date Picker",
+
+  component: DatePickerPreview,
+
   parameters: {
-    layout: "padded",
+    layout: "centered",
     docs: {
       description: {
         component: `
@@ -99,38 +129,14 @@ Use date picker compositions for scheduling, reporting filters, reservation wind
   args: {
     withIcon: true,
   },
-} satisfies Meta<DatePickerStoryArgs>
+} satisfies Meta<typeof DatePickerPreview>
 
 export default meta
 
 type Story = StoryObj<typeof meta>
 
 export const Basic: Story = {
-  render: ({ withIcon = true }) => {
-    const [date, setDate] = React.useState<Date | undefined>(startOfToday())
-    const [open, setOpen] = React.useState(false)
-
-    return (
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          <TriggerButton
-            withIcon={withIcon}
-            label={date ? format(date, "MMM d, yyyy") : "Pick a date"}
-          />
-        </PopoverTrigger>
-        <PopoverContent className="w-auto p-0">
-          <Calendar
-            mode="single"
-            selected={date}
-            onSelect={(value) => {
-              setDate(value)
-              if (value) setOpen(false)
-            }}
-          />
-        </PopoverContent>
-      </Popover>
-    )
-  },
+  render: (args) => <DatePickerPreview {...args} />,
 }
 
 export const Range: Story = {
@@ -272,6 +278,7 @@ export const DateAndTimePicker: Story = {
               label={date ? format(date, "EEEE, MMM d, yyyy") : "Pick a date"}
             />
           </PopoverTrigger>
+
           <PopoverContent className="w-auto p-0">
             <Calendar
               mode="single"
@@ -283,13 +290,15 @@ export const DateAndTimePicker: Story = {
             />
           </PopoverContent>
         </Popover>
+
         <InputGroup>
           <InputGroupAddon align="inline-start">
             <InputGroupText>
-              <ClockIcon />
+              {withIcon ? <ClockIcon /> : null}
               Time
             </InputGroupText>
           </InputGroupAddon>
+
           <InputGroupInput
             type="time"
             value={time}

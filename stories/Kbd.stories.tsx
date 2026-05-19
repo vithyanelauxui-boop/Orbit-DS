@@ -16,10 +16,10 @@ import {
 } from "@orbit-ds"
 
 const meta = {
-  title: "Orbit DS/Kbd",
-  component: Kbd,
+  title: "Components/Kbd",
+  component: Shortcut,
   parameters: {
-    layout: "padded",
+    layout: "centered",
     docs: {
       description: {
         component: `
@@ -50,7 +50,7 @@ Use keyboard tokens to display textual user input from the keyboard in inline co
     keyLabel: "B",
     showPlus: true,
   },
-} satisfies Meta<typeof Kbd>
+} satisfies Meta<typeof Shortcut>
 
 export default meta
 

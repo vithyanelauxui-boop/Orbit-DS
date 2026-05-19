@@ -88,10 +88,10 @@ function NativeSelectPreview({
 }
 
 const meta = {
-  title: "Orbit DS/Native Select",
+  title: "Components/Native Select",
   component: NativeSelectPreview,
   parameters: {
-    layout: "fullscreen",
+    layout: "centered",
     docs: {
       description: {
         component: `

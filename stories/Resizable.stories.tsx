@@ -15,10 +15,10 @@ const panelClassName =
   "flex h-full items-center justify-center rounded-lg border bg-muted/40 p-4 text-sm font-medium"
 
 const meta = {
-  title: "Orbit DS/Resizable",
+  title: "Components/Resizable",
   component: ResizablePanelGroup,
   parameters: {
-    layout: "fullscreen",
+    layout: "centered",
     docs: {
       description: {
         component:

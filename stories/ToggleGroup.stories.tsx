@@ -11,7 +11,7 @@ import {
 } from "@phosphor-icons/react"
 
 const meta = {
-  title: "Orbit DS/Toggle Group",
+  title: "Components/Toggle Group",
   component: ToggleGroup,
   parameters: {
     layout: "centered",

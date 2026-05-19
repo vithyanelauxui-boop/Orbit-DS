@@ -1,9 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
-import { CardHeader, Skeleton, CardContent } from "@orbit-ds"
+import {
+  Card as CardContainer,
+  CardContent,
+  CardHeader,
+  Skeleton,
+} from "@orbit-ds"
 
 const meta = {
-  title: "Orbit DS/Skeleton",
+  title: "Components/Skeleton",
   component: Skeleton,
   parameters: {
     layout: "centered",
@@ -37,7 +42,7 @@ export const Avatar: Story = {
 
 export const Card: Story = {
   render: () => (
-    <Card className="w-full max-w-xs">
+    <CardContainer className="w-full max-w-xs">
       <CardHeader>
         <Skeleton className="h-4 w-2/3" />
         <Skeleton className="h-4 w-1/2" />
@@ -45,7 +50,7 @@ export const Card: Story = {
       <CardContent>
         <Skeleton className="aspect-video w-full" />
       </CardContent>
-    </Card>
+    </CardContainer>
   ),
 }
 

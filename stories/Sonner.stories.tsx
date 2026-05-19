@@ -123,9 +123,38 @@ function showToast({
   toast(title, { description, position, action })
 }
 
+function SonnerPreview({
+  type = "default",
+  description = "",
+  position = "bottom-right",
+  withAction = false,
+}: SonnerStoryArgs) {
+  return (
+    <>
+      <Toaster position={position} />
+      <StoryWrap>
+        <Button
+          variant="outline"
+          onClick={() =>
+            showToast({
+              type,
+              title: "Preview toast",
+              description,
+              position,
+              withAction,
+            })
+          }
+        >
+          Trigger toast
+        </Button>
+      </StoryWrap>
+    </>
+  )
+}
+
 const meta = {
-  title: "Orbit DS/Sonner",
-  component: Toaster,
+  title: "Components/Sonner",
+  component: SonnerPreview,
   parameters: {
     layout: "centered",
     docs: {
@@ -187,7 +216,7 @@ Use the toaster for lightweight feedback such as confirmations, background progr
     position: "bottom-right",
     withAction: false,
   },
-} satisfies Meta<SonnerStoryArgs>
+} satisfies Meta<typeof SonnerPreview>
 
 export default meta
 
@@ -435,4 +464,3 @@ export const Position: Story = {
     </>
   ),
 }
-

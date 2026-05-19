@@ -71,11 +71,11 @@ function TooltipPreview({
 }
 
 const meta = {
-  title: "Orbit DS/Tooltip",
+  title: "Components/Tooltip",
   component: TooltipPreview,
 
   parameters: {
-    layout: "fullscreen",
+    layout: "centered",
 
     docs: {
       description: {

@@ -78,11 +78,7 @@ function AlertPreview({
       {showIcon ? (
         <Icon
           name={icon}
-          variant={
-            variant === "destructive"
-              ? "fill"
-              : "regular"
-          }
+          variant="regular"
           className={preset?.icon}
         />
       ) : null}
@@ -105,7 +101,7 @@ function AlertPreview({
 }
 
 const meta = {
-  title: "Orbit DS/Alert",
+  title: "Components/Alert",
   component: AlertPreview,
   subcomponents: {
     AlertTitle,
@@ -113,7 +109,7 @@ const meta = {
     AlertAction,
   },
   parameters: {
-    layout: "fullscreen",
+    layout: "centered",
     docs: {
       description: {
         component: `
@@ -230,6 +226,14 @@ export const Destructive: Story = {
     description:
       "We could not save your changes. Please retry or restore the previous version before leaving this page.",
   },
+  argTypes: {
+    colorPreset: {
+      control: false,
+      table: {
+        disable: true,
+      },
+    },
+  },
   render: (args) => <AlertPreview {...args} />,
 }
 
@@ -249,12 +253,21 @@ export const Action: Story = {
 
 export const CustomColors: Story = {
   args: {
+    variant: "default",
     showIcon: true,
     icon: "check-circle",
     title: "Deployment complete",
     description:
       "Orbit DS has been deployed successfully with zero downtime across your preview environment.",
     colorPreset: "green",
+  },
+  argTypes: {
+    variant: {
+      control: false,
+      table: {
+        disable: true,
+      },
+    },
   },
   render: (args) => <AlertPreview {...args} />,
 }

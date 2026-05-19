@@ -115,7 +115,7 @@ function SelectPreview({
 }
 
 const meta = {
-  title: "Orbit DS/Select",
+  title: "Components/Select",
   component: SelectPreview,
   parameters: {
     docs: {

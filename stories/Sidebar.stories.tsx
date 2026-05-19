@@ -48,8 +48,8 @@ const primaryNav = [
 ]
 
 const meta = {
-  title: "Orbit DS/Sidebar",
-  component: Sidebar,
+  title: "Components/Sidebar",
+  component: AppSidebar,
   parameters: {
     layout: "centered",
     docs: {
@@ -109,7 +109,7 @@ SidebarProvider
     variant: "sidebar",
     collapsible: "icon",
   },
-} satisfies Meta<typeof Sidebar>
+} satisfies Meta<typeof AppSidebar>
 
 export default meta
 
@@ -124,18 +124,11 @@ function AppSidebar({
   variant?: "sidebar" | "floating" | "inset"
   collapsible?: "offcanvas" | "icon" | "none"
 }) {
-  const [isOpen, setIsOpen] = React.useState(open)
-
-  React.useEffect(() => {
-    setIsOpen(open)
-  }, [open])
-
   return (
     <TooltipProvider>
       <SidebarProvider
         defaultOpen={open}
-        open={isOpen}
-        onOpenChange={setIsOpen}
+        open={open}
       >
         <div className="overflow-hidden rounded-xl border bg-sidebar">
           <Sidebar variant={variant} collapsible={collapsible}>

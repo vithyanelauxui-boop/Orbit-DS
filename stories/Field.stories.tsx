@@ -35,6 +35,14 @@ type BaseArgs = {
   orientation?: Orientation
 }
 
+type FieldStoryArgs = BaseArgs & {
+  disabled?: boolean
+  invalid?: boolean
+  rows?: number
+  range?: boolean
+  checked?: boolean
+}
+
 function StoryFrame({
   children,
 }: {
@@ -54,13 +62,19 @@ const fieldClass = "items-center gap-4"
 const cardClass =
   "w-full rounded-2xl border p-6"
 
-const meta = {
-  title: "Orbit DS/Field",
+function FieldStorybookPreview(
+  _args: FieldStoryArgs
+) {
+  return null
+}
 
-  component: Field,
+const meta = {
+  title: "Components/Field",
+
+  component: FieldStorybookPreview,
 
   parameters: {
-    layout: "fullscreen",
+    layout: "centered",
 
     docs: {
       description: {
@@ -74,7 +88,7 @@ and semantic form layouts.
   },
 
   tags: ["autodocs"],
-} satisfies Meta<BaseArgs>
+} satisfies Meta<typeof FieldStorybookPreview>
 
 export default meta
 

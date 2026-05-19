@@ -38,10 +38,10 @@ function PlusIcon() {
 }
 
 const meta = {
-  title: "Orbit DS/Button",
+  title: "Components/Button",
   component: Button,
   parameters: {
-    layout: "fullscreen",
+    layout: "centered",
     docs: {
       description: {
         component: `

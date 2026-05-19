@@ -3,10 +3,10 @@ import type { Meta, StoryObj } from "@storybook/react-vite"
 import { Button, Separator } from "@orbit-ds"
 
 const meta = {
-  title: "Orbit DS/Separator",
+  title: "Components/Separator",
   component: Separator,
   parameters: {
-    layout: "padded",
+    layout: "centered",
     docs: {
       description: {
         component:

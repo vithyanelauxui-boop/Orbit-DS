@@ -66,7 +66,7 @@ function SpinnerPreview({
 }
 
 const meta = {
-  title: "Orbit DS/Spinner",
+  title: "Components/Spinner",
   component: SpinnerPreview,
   parameters: {
     layout: "centered",

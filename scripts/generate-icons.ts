@@ -7,7 +7,12 @@ import prettier from "prettier"
 const ICONS_DIR = path.resolve("public/icons/SVGs")
 const OUTPUT_DIR = path.resolve("packages/orbit-ds/src/icons")
 
-const VARIANTS = ["regular", "fill", "bold", "duotone"] as const
+const VARIANTS = [
+  "regular",
+  "fill",
+  "bold",
+  "duotone",
+] as const
 
 type Variant = (typeof VARIANTS)[number]
 
@@ -15,13 +20,19 @@ function toPascalCase(str: string) {
   return str
     .replace(/\.svg$/, "")
     .split(/[-_\s]/g)
-    .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+    .map(
+      (s) =>
+        s.charAt(0).toUpperCase() + s.slice(1)
+    )
     .join("")
 }
 
-async function extractSvgInnerContent(
+async function extractSvgData(
   svgContent: string
-): Promise<string> {
+): Promise<{
+  innerSvg: string
+  viewBox: string
+}> {
   const jsx = await transform(
     svgContent,
     {
@@ -33,15 +44,31 @@ async function extractSvgInnerContent(
     { componentName: "TempIcon" }
   )
 
-  const match = jsx.match(
-    /<svg[^>]*>([\s\S]*?)<\/svg>/
+  const svgMatch = jsx.match(
+    /<svg([^>]*)>([\s\S]*?)<\/svg>/
   )
 
-  return match?.[1]?.trim() || ""
+  const svgAttributes = svgMatch?.[1] || ""
+  const innerSvg = svgMatch?.[2]?.trim() || ""
+
+  const viewBoxMatch =
+    svgAttributes.match(
+      /viewBox="([^"]+)"/
+    )
+
+  const viewBox =
+    viewBoxMatch?.[1] || "0 0 256 256"
+
+  return {
+    innerSvg,
+    viewBox,
+  }
 }
 
 async function main() {
-  await fs.mkdir(OUTPUT_DIR, { recursive: true })
+  await fs.mkdir(OUTPUT_DIR, {
+    recursive: true,
+  })
 
   const files = await fg("**/*.svg", {
     cwd: ICONS_DIR,
@@ -54,31 +81,40 @@ async function main() {
   > = {}
 
   for (const file of files) {
-    const relative = path.relative(ICONS_DIR, file)
+    const relative = path.relative(
+      ICONS_DIR,
+      file
+    )
 
     const parts = relative.split(path.sep)
 
     const variant = parts[0] as Variant
 
-    if (!VARIANTS.includes(variant)) continue
+    if (!VARIANTS.includes(variant))
+      continue
 
-    const rawName = path.basename(file, ".svg")
+    const rawName = path.basename(
+      file,
+      ".svg"
+    )
 
     const fileName = rawName
       .replace(/-bold$/, "")
       .replace(/-fill$/, "")
       .replace(/-duotone$/, "")
 
-        if (!iconMap[fileName]) {
-          iconMap[fileName] = {}
-        }
+    if (!iconMap[fileName]) {
+      iconMap[fileName] = {}
+    }
 
-        iconMap[fileName][variant] = file
-      }
+    iconMap[fileName][variant] = file
+  }
 
   const exports: string[] = []
 
-  for (const [iconName, variants] of Object.entries(iconMap)) {
+  for (const [iconName, variants] of Object.entries(
+    iconMap
+  )) {
     const componentName =
       toPascalCase(iconName) + "Icon"
 
@@ -89,13 +125,16 @@ async function main() {
 
       if (!filePath) continue
 
-      const svgContent = await fs.readFile(
-        filePath,
-        "utf-8"
-      )
+      const svgContent =
+        await fs.readFile(
+          filePath,
+          "utf-8"
+        )
 
-      const innerSvg =
-        await extractSvgInnerContent(svgContent)
+      const {
+        innerSvg,
+        viewBox,
+      } = await extractSvgData(svgContent)
 
       variantBlocks.push(`
         case "${variant}":
@@ -103,7 +142,7 @@ async function main() {
             <svg
               width={size}
               height={size}
-              viewBox="0 0 24 24"
+              viewBox="${viewBox}"
               fill="currentColor"
               xmlns="http://www.w3.org/2000/svg"
               {...props}
@@ -117,9 +156,7 @@ async function main() {
     const componentCode = `
       import * as React from "react"
 
-      import type {
-        IconProps,
-      } from "./types"
+      import type { IconProps } from "./types"
 
       export function ${componentName}({
         variant = "regular",
@@ -135,12 +172,13 @@ async function main() {
       }
     `
 
-    const formatted = await prettier.format(
-      componentCode,
-      {
-        parser: "typescript",
-      }
-    )
+    const formatted =
+      await prettier.format(
+        componentCode,
+        {
+          parser: "typescript",
+        }
+      )
 
     await fs.writeFile(
       path.join(
@@ -155,19 +193,22 @@ async function main() {
     )
   }
 
-  const indexContent = await prettier.format(
-    exports.join("\n"),
-    {
-      parser: "typescript",
-    }
-  )
+  const indexContent =
+    await prettier.format(
+      exports.join("\n"),
+      {
+        parser: "typescript",
+      }
+    )
 
   await fs.writeFile(
     path.join(OUTPUT_DIR, "index.ts"),
     indexContent
   )
 
-  console.log("✅ Icons generated successfully")
+  console.log(
+    "✅ Icons generated successfully"
+  )
 }
 
 main().catch(console.error)

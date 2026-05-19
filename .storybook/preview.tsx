@@ -2,12 +2,13 @@ import type { Preview } from "@storybook/nextjs-vite"
 // @ts-ignore: side-effect import of CSS without type declarations
 import "../packages/orbit-ds/src/styles/globals.css"
 import { themes } from 'storybook/theming';
+
 const preview: Preview = {
   decorators: [
     (Story, context) => (
       <div
         className={[
-          "flex justify-center px-6",
+          "flex w-full justify-center px-6 font-sans",
           context.viewMode === "docs"
             ? "items-start py-4"
             : "min-h-[20vh] items-center",

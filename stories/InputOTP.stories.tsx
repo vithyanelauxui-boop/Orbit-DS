@@ -248,10 +248,10 @@ function InputOTPVariantsShowcase() {
 }
 
 const meta = {
-  title: "Orbit DS/Input OTP",
-  component: InputOTP,
+  title: "Components/Input OTP",
+  component: OTPPreview,
   parameters: {
-    layout: "padded",
+    layout: "centered",
     docs: {
       description: {
         component: `
@@ -290,7 +290,7 @@ Use OTP inputs for verification codes, 2FA prompts, one-time passcodes, and comp
     invalid: false,
     pattern: REGEXP_ONLY_DIGITS,
   },
-} satisfies Meta<typeof InputOTP>
+} satisfies Meta<typeof OTPPreview>
 
 export default meta
 

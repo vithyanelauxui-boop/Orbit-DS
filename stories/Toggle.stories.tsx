@@ -4,7 +4,7 @@ import { Toggle } from "@orbit-ds"
 import { TextAlignCenterIcon, TextBIcon } from "@phosphor-icons/react"
 
 const meta = {
-  title: "Orbit DS/Toggle",
+  title: "Components/Toggle",
   component: Toggle,
   parameters: {
     layout: "centered",

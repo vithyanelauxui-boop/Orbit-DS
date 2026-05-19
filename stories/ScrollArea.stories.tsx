@@ -14,10 +14,10 @@ const activity = [
 ]
 
 const meta = {
-  title: "Orbit DS/Scroll Area",
+  title: "Components/Scroll Area",
   component: ScrollArea,
   parameters: {
-    layout: "padded",
+    layout: "centered",
     docs: {
       description: {
         component:

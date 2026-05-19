@@ -63,14 +63,27 @@ type DirectionStoryArgs = {
   variant?: "ltr" | "rtl" | "side-by-side"
 }
 
+function DirectionShowcase({
+  variant = "ltr",
+}: DirectionStoryArgs) {
+  return variant === "side-by-side" ? (
+    <div className="grid gap-4 lg:grid-cols-2">
+      <LoginPreview direction="ltr" />
+      <LoginPreview direction="rtl" />
+    </div>
+  ) : (
+    <LoginPreview direction={variant} />
+  )
+}
+
 const meta = {
-  title: "Orbit DS/Direction",
-  component: DirectionProvider,
+  title: "Components/Direction",
+  component: DirectionShowcase,
   args: {
     variant: "ltr",
   },
   parameters: {
-    layout: "padded",
+    layout: "centered",
     docs: {
       description: {
         component: `
@@ -88,20 +101,12 @@ Use the direction provider to switch shared UI between LTR and RTL layouts. This
         "Switches between left-to-right, right-to-left, and comparison layouts.",
     },
   },
-} satisfies Meta<DirectionStoryArgs>
+} satisfies Meta<typeof DirectionShowcase>
 
 export default meta
 
 type Story = StoryObj<typeof meta>
 
 export const Direction: Story = {
-  render: ({ variant = "ltr" }) =>
-    variant === "side-by-side" ? (
-      <div className="grid gap-4 lg:grid-cols-2">
-        <LoginPreview direction="ltr" />
-        <LoginPreview direction="rtl" />
-      </div>
-    ) : (
-      <LoginPreview direction={variant} />
-    ),
+  render: (args) => <DirectionShowcase {...args} />,
 }

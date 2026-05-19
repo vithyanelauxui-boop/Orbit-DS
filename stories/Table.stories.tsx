@@ -58,7 +58,7 @@ function TablePreview({
 }
 
 const meta = {
-  title: "Orbit DS/Table",
+  title: "Components/Table",
   component: TablePreview,
   parameters: {
     layout: "centered",

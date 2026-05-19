@@ -17,11 +17,53 @@ import {
   MenubarTrigger,
 } from "@orbit-ds"
 
+type MenubarStoryArgs = {
+  placement?: "default" | "top" | "bottom"
+}
+
+function getContentSide(
+  placement: "default" | "top" | "bottom"
+) {
+  if (placement === "default") {
+    return undefined
+  }
+
+  return placement === "top" ? "bottom" : "top"
+}
+
+function MenubarPreview({
+  placement = "default",
+}: MenubarStoryArgs) {
+  return (
+    <Menubar>
+      <MenubarMenu>
+        <MenubarTrigger>File</MenubarTrigger>
+        <MenubarContent side={getContentSide(placement)}>
+          <MenubarItem>
+            New file
+            <MenubarShortcut>Cmd+N</MenubarShortcut>
+          </MenubarItem>
+          <MenubarItem>Open</MenubarItem>
+          <MenubarSeparator />
+          <MenubarItem variant="destructive">Delete</MenubarItem>
+        </MenubarContent>
+      </MenubarMenu>
+      <MenubarMenu>
+        <MenubarTrigger>Edit</MenubarTrigger>
+        <MenubarContent side={getContentSide(placement)}>
+          <MenubarItem>Undo</MenubarItem>
+          <MenubarItem>Redo</MenubarItem>
+        </MenubarContent>
+      </MenubarMenu>
+    </Menubar>
+  )
+}
+
 const meta = {
-  title: "Orbit DS/Menubar",
-  component: Menubar,
+  title: "Components/Menubar",
+  component: MenubarPreview,
   parameters: {
-    layout: "fullscreen",
+    layout: "centered",
     docs: {
       description: {
         component: `
@@ -56,50 +98,18 @@ Use menubars for app-style desktop navigation, editor menus, and command cluster
   args: {
     placement: "default",
   },
-} satisfies Meta<typeof Menubar>
+} satisfies Meta<typeof MenubarPreview>
 
 export default meta
 
 type Story = StoryObj<typeof meta>
 
-function getContentSide(
-  placement: "default" | "top" | "bottom"
-) {
-  if (placement === "default") {
-    return undefined
-  }
-
-  return placement === "top" ? "bottom" : "top"
-}
-
 export const Basic: Story = {
-  render: ({ placement }) => (
-    <Menubar>
-      <MenubarMenu>
-        <MenubarTrigger>File</MenubarTrigger>
-        <MenubarContent side={getContentSide(placement)}>
-          <MenubarItem>
-            New file
-            <MenubarShortcut>⌘N</MenubarShortcut>
-          </MenubarItem>
-          <MenubarItem>Open</MenubarItem>
-          <MenubarSeparator />
-          <MenubarItem variant="destructive">Delete</MenubarItem>
-        </MenubarContent>
-      </MenubarMenu>
-      <MenubarMenu>
-        <MenubarTrigger>Edit</MenubarTrigger>
-        <MenubarContent side={getContentSide(placement)}>
-          <MenubarItem>Undo</MenubarItem>
-          <MenubarItem>Redo</MenubarItem>
-        </MenubarContent>
-      </MenubarMenu>
-    </Menubar>
-  ),
+  render: (args) => <MenubarPreview {...args} />,
 }
 
 export const CheckboxItems: Story = {
-  render: ({ placement }) => {
+  render: ({ placement = "default" }) => {
     const [statusBar, setStatusBar] = React.useState(true)
     const [activity, setActivity] = React.useState(false)
 
@@ -128,7 +138,7 @@ export const CheckboxItems: Story = {
 }
 
 export const SubmenuAndRadio: Story = {
-  render: ({ placement }) => {
+  render: ({ placement = "default" }) => {
     const [density, setDensity] = React.useState("comfortable")
 
     return (

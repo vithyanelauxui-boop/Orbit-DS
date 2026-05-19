@@ -50,11 +50,11 @@ function SliderPreview({
 }
 
 const meta = {
-  title: "Orbit DS/Slider",
+  title: "Components/Slider",
   component: SliderPreview,
 
   parameters: {
-    layout: "fullscreen",
+    layout: "centered",
 
     docs: {
       description: {

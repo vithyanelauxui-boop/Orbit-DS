@@ -63,10 +63,10 @@ function EmptyPreview({
 }
 
 const meta = {
-  title: "Orbit DS/Empty",
+  title: "Components/Empty",
   component: EmptyPreview,
   parameters: {
-    layout: "padded",
+    layout: "centered",
     docs: {
       description: {
         component: `

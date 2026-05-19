@@ -3,10 +3,10 @@ import type { Meta, StoryObj } from "@storybook/react-vite"
 import { Checkbox, Input, Label, Switch } from "@orbit-ds"
 
 const meta = {
-  title: "Orbit DS/Label",
+  title: "Components/Label",
   component: Label,
   parameters: {
-    layout: "fullscreen",
+    layout: "centered",
     docs: {
       description: {
         component: `

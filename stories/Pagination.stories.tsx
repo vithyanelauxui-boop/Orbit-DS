@@ -11,10 +11,10 @@ import {
 } from "@orbit-ds"
 
 const meta = {
-  title: "Orbit DS/Pagination",
+  title: "Components/Pagination",
   component: Pagination,
   parameters: {
-    layout: "fullscreen",
+    layout: "centered",
     docs: {
       description: {
         component: `

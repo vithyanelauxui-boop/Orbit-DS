@@ -1,339 +1,209 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import {
-  Button,
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  Icon,
+  BluetoothIcon,
+  CircleDashedIcon,
+  TrashIcon,
 } from "@orbit-ds"
 
-const dialogSizes = {
-  small: "sm:max-w-xs",
-  default: "sm:max-w-sm",
-  medium: "sm:max-w-md",
-} as const
-
-const mediaIcons = [
-  "image",
-  "info",
-  "warning-diamond",
-  "check-circle",
-  "bell",
-] as const
-
-const cancelIcons = [
-  "arrow-left",
-  "arrow-right",
-  "x-circle",
-  "warning-circle",
-  "info",
-] as const
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogMedia,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  Button,
+} from "@orbit-ds"
 
 type AlertDialogStoryArgs = {
-  triggerText?: string
-  title?: string
-  description?: string
-  confirmText?: string
-  cancelText?: string
-  showMediaIcon?: boolean
-  media?: boolean
-  mediaIcon?: (typeof mediaIcons)[number]
-  cancelIcon?: (typeof cancelIcons)[number]
-  cancelIconPosition?: "left" | "right"
+  showMedia?: boolean
+  mediaIcon?: "share" | "bluetooth" | "delete"
   destructive?: boolean
-  compact?: boolean
-  dialogSize?: keyof typeof dialogSizes
 }
 
-function CancelButton({
-  label,
-  icon,
-  position,
-}: {
-  label: string
-  icon: (typeof cancelIcons)[number]
-  position: "left" | "right"
-}) {
-  const iconElement = (
-    <Icon
-      name={icon}
-      variant="regular"
-      className="size-4"
-    />
-  )
+function getMediaIcon(
+  icon: AlertDialogStoryArgs["mediaIcon"]
+) {
+  switch (icon) {
+    case "bluetooth":
+      return <BluetoothIcon />
 
-  return (
-    <DialogClose asChild>
-      <Button variant="outline">
-        {position === "left" ? iconElement : null}
-        {label}
-        {position === "right" ? iconElement : null}
-      </Button>
-    </DialogClose>
-  )
+    case "delete":
+      return <TrashIcon />
+
+    default:
+      return <CircleDashedIcon />
+  }
 }
 
-function DialogShell({
-  triggerText = "Open dialog",
-  title = "Invite teammates",
-  description = "Send secure invite links so your team can review components, tokens, and usage guidance.",
-  confirmText = "Send invites",
-  cancelText = "Cancel",
-  showMediaIcon = true,
-  media = false,
-  mediaIcon = "image",
-  cancelIcon = "arrow-left",
-  cancelIconPosition = "left",
+function AlertDialogDemo({
+  showMedia = false,
+  mediaIcon = "share",
   destructive = false,
-  compact = false,
-  dialogSize = "default",
-}: AlertDialogStoryArgs) {
+  size = "default",
+}: AlertDialogStoryArgs & {
+  size?: "default" | "sm"
+}) {
   return (
-    <Dialog>
-      <DialogTrigger asChild>
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
         <Button
-          variant={destructive ? "destructive" : "default"}
+          variant={
+            destructive
+              ? "destructive"
+              : "outline"
+          }
         >
-          {triggerText}
+          Show Dialog
         </Button>
-      </DialogTrigger>
+      </AlertDialogTrigger>
 
-      <DialogContent className={dialogSizes[dialogSize]}>
-        {media && showMediaIcon ? (
-          <div className="-mx-4 -mt-4 overflow-hidden rounded-t-xl border-b">
-            <div className="flex h-40 items-center justify-center bg-linear-to-br from-slate-100 via-slate-50 to-slate-200 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900">
-              <Icon
-                name={mediaIcon}
-                variant={
-                  destructive
-                    ? "fill"
-                    : "regular"
-                }
-                size={56}
-                className={
-                  destructive
-                    ? "text-destructive"
-                    : "text-muted-foreground"
-                }
-              />
-            </div>
-          </div>
-        ) : null}
+      <AlertDialogContent
+        size={size === "sm" ? "sm" : undefined}
+      >
+        <AlertDialogHeader>
+          {showMedia && (
+            <AlertDialogMedia
+              className={
+                destructive
+                  ? "bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive"
+                  : undefined
+              }
+            >
+              {getMediaIcon(mediaIcon)}
+            </AlertDialogMedia>
+          )}
 
-        <DialogHeader className={compact ? "gap-1" : undefined}>
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
-        </DialogHeader>
+          <AlertDialogTitle>
+            {destructive
+              ? "Delete chat?"
+              : "Are you absolutely sure?"}
+          </AlertDialogTitle>
 
-        <DialogFooter>
-          <CancelButton
-            label={cancelText}
-            icon={cancelIcon}
-            position={cancelIconPosition}
-          />
+          <AlertDialogDescription>
+            {destructive
+              ? "This action cannot be undone. This will permanently delete this chat conversation."
+              : "This action cannot be undone. This will permanently delete your account and remove your data from our servers."}
+          </AlertDialogDescription>
+        </AlertDialogHeader>
 
-          <Button
-            variant={destructive ? "destructive" : "default"}
+        <AlertDialogFooter>
+          <AlertDialogCancel>
+            Cancel
+          </AlertDialogCancel>
+
+          <AlertDialogAction
+            variant={
+              destructive
+                ? "destructive"
+                : "default"
+            }
           >
-            {confirmText}
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+            {destructive
+              ? "Delete"
+              : "Continue"}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   )
 }
 
 const meta = {
-  title: "Orbit DS/Alert Dialog",
-  component: DialogShell,
+  title: "Components/Alert Dialog",
+
   parameters: {
     layout: "centered",
-    docs: {
-      description: {
-        component: `
-Use alert dialogs for high-importance confirmations, destructive actions, and focused decision-making moments.
-
-## Composition
-
-\`\`\`text
-Dialog
-|-- DialogTrigger
-\`-- DialogContent
-    |-- DialogHeader
-    |   |-- DialogTitle
-    |   \`-- DialogDescription
-    \`-- DialogFooter
-\`\`\`
-
-## Parameters
-
-- \`DialogTrigger\`: Opens the modal and usually wraps the initiating button.
-- \`DialogContent\`: Defines the modal surface, width, spacing, and close affordances.
-- \`DialogTitle\`: Supplies the primary question or confirmation heading.
-- \`DialogDescription\`: Supplies the supporting context and consequence text.
-- \`DialogFooter\`: Holds the confirm and cancel actions.
-        `,
-      },
-    },
   },
-  tags: ["autodocs"],
+
   argTypes: {
-    triggerText: {
-      control: "text",
-      description:
-        "Sets the button label used to open the alert dialog.",
-    },
-    title: {
-      control: "text",
-      description:
-        "Sets the main confirmation question shown in `DialogTitle`.",
-    },
-    description: {
-      control: "text",
-      description:
-        "Sets the supporting body copy shown in `DialogDescription`.",
-    },
-    confirmText: {
-      control: "text",
-      description:
-        "Sets the primary action label in the dialog footer.",
-    },
-    cancelText: {
-      control: "text",
-      description:
-        "Sets the cancel action label in the dialog footer.",
-    },
-    media: {
-      control: "boolean",
-      description:
-        "Shows or hides the media panel above the dialog text.",
-    },
-    showMediaIcon: {
-      control: "boolean",
-      description:
-        "Shows or hides the icon inside the optional media panel.",
-    },
-    mediaIcon: {
-      control: "select",
-      options: mediaIcons,
-      description:
-        "Selects the icon displayed inside the optional media panel.",
-    },
-    cancelIcon: {
-      control: "select",
-      options: cancelIcons,
-      description:
-        "Selects the icon rendered inside the cancel button.",
-    },
-    cancelIconPosition: {
-      control: "inline-radio",
-      options: ["left", "right"],
-      description:
-        "Moves the cancel icon to the left or right side of the button label.",
-    },
     destructive: {
       control: "boolean",
       description:
-        "Toggles destructive styling for the trigger, media icon, and confirm action.",
+        "Makes the action button destructive",
     },
-    compact: {
-      control: "boolean",
-      description:
-        "Reduces vertical spacing in the dialog header for tighter layouts.",
-    },
-    dialogSize: {
-      control: "inline-radio",
-      options: Object.keys(dialogSizes),
-      description:
-        "Chooses the max width of the dialog content.",
+
+    mediaIcon: {
+      control: "select",
+      options: [
+        "share",
+        "bluetooth",
+        "delete",
+      ],
     },
   },
-} satisfies Meta<AlertDialogStoryArgs>
+
+  tags: ["autodocs"],
+} satisfies Meta
 
 export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Basic: Story = {
+export const Default: Story = {
+  render: (args) => (
+    <AlertDialogDemo {...args} />
+  ),
+
   args: {
-    triggerText: "Open dialog",
-    title: "Invite teammates",
-    description:
-      "Send secure invite links so your team can review components, tokens, and usage guidance.",
-    confirmText: "Send invites",
-    cancelText: "Cancel",
-    dialogSize: "default",
+    destructive: false,
+    showMedia: false,
   },
-  render: (args) => <DialogShell {...args} />,
 }
 
 export const Small: Story = {
+  render: (args) => (
+    <AlertDialogDemo
+      {...args}
+      size="sm"
+    />
+  ),
+
   args: {
-    triggerText: "Open small dialog",
-    title: "Save draft?",
-    description:
-      "Your changes will remain private until you publish.",
-    confirmText: "Save draft",
-    cancelText: "Back",
-    compact: true,
-    dialogSize: "small",
+    destructive: false,
+    showMedia: false,
   },
-  render: (args) => <DialogShell {...args} />,
 }
 
-export const Media: Story = {
+export const DefaultWithIcon: Story = {
+  render: (args) => (
+    <AlertDialogDemo {...args} />
+  ),
+
   args: {
-    triggerText: "Open media dialog",
-    title: "Share release update",
-    description:
-      "Send a quick summary to reviewers before the release moves to published.",
-    confirmText: "Send update",
-    cancelText: "Cancel",
-    media: true,
-    showMediaIcon: true,
-    mediaIcon: "image",
-    dialogSize: "medium",
+    destructive: false,
+    showMedia: true,
+    mediaIcon: "share",
   },
-  render: (args) => <DialogShell {...args} />,
 }
 
-export const SmallWithMedia: Story = {
+export const SmallWithIcon: Story = {
+  render: (args) => (
+    <AlertDialogDemo
+      {...args}
+      size="sm"
+    />
+  ),
+
   args: {
-    triggerText: "Open compact media dialog",
-    title: "Ready to publish?",
-    description:
-      "Review the final content and confirm the release window before you proceed.",
-    confirmText: "Publish",
-    cancelText: "Review again",
-    compact: true,
-    media: true,
-    showMediaIcon: true,
-    mediaIcon: "info",
-    dialogSize: "small",
+    destructive: false,
+    showMedia: true,
+    mediaIcon: "bluetooth",
   },
-  render: (args) => <DialogShell {...args} />,
 }
 
 export const Destructive: Story = {
-  args: {
-    triggerText: "Open destructive dialog",
-    title: "Delete project?",
-    description:
-      "This permanently removes the project, its activity history, and all associated drafts.",
-    confirmText: "Delete",
-    cancelText: "Keep project",
-    destructive: true,
-    media: true,
-    showMediaIcon: true,
-    mediaIcon: "warning-diamond",
-    cancelIcon: "arrow-right",
-    cancelIconPosition: "right",
-  },
-  render: (args) => <DialogShell {...args} />,
+  render: () => (
+    <AlertDialogDemo
+      destructive
+      showMedia
+      mediaIcon="delete"
+      size="sm"
+    />
+  ),
 }

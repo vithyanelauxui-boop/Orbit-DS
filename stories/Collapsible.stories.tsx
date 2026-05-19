@@ -3,80 +3,352 @@ import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import {
   Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+ CardTitle,
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
+  Field,
+  FieldGroup,
+  FieldLabel,
+  Input,
+  Tabs,
+  TabsList,
+  TabsTrigger,
 } from "@orbit-ds"
 
-function ChevronIcon({ open }: { open: boolean }) {
+import {
+  CaretDownIcon,
+  CaretRightIcon,
+  FileIcon,
+  FolderIcon,
+  MinusIcon,
+  SquareIcon,
+} from "@orbit-ds"
+
+type CollapsibleStoryArgs = {
+  defaultOpen?: boolean
+}
+
+type FileTreeItem =
+  | { name: string }
+  | { name: string; items: FileTreeItem[] }
+
+function BasicPreview({
+  defaultOpen = false,
+}: CollapsibleStoryArgs) {
   return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 16 16"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.75"
-      className={
-        open ? "rotate-180 transition-transform" : "transition-transform"
-      }
-    >
-      <path
-        d="M4 6.5 8 10l4-3.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
+    <Card className="w-[420px]">
+      <CardContent className="">
+        <Collapsible
+          defaultOpen={defaultOpen}
+          className="rounded-md transition-colors data-[state=open]:bg-muted"
+        >
+          <CollapsibleTrigger asChild>
+            <Button
+              variant="ghost"
+              className="group w-full justify-start"
+            >
+              Product details
+
+              <CaretDownIcon
+                className="ml-auto transition-transform group-data-[state=open]:rotate-180"
+                weight="bold"
+              />
+            </Button>
+          </CollapsibleTrigger>
+
+          <CollapsibleContent className="flex flex-col items-start gap-3 px-3 pb-3 pt-1 text-sm">
+            <p className="text-muted-foreground">
+              This panel can be expanded or collapsed to reveal additional
+              content.
+            </p>
+
+            <Button size="sm">
+              Learn more
+            </Button>
+          </CollapsibleContent>
+        </Collapsible>
+      </CardContent>
+    </Card>
   )
 }
 
-type CollapsibleStoryArgs = {
-  state?: "inactive" | "active"
+function InlinePreview({
+  defaultOpen = false,
+}: CollapsibleStoryArgs) {
+  return (
+    <div className="w-[420px] rounded-xl border p-4">
+      <Collapsible defaultOpen={defaultOpen}>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <div className="font-medium">
+              March invoice
+            </div>
+
+            <div className="text-sm text-muted-foreground">
+              $2,480 due April 4
+            </div>
+          </div>
+
+          <CollapsibleTrigger asChild>
+            <Button variant="ghost" size="sm">
+              Details
+            </Button>
+          </CollapsibleTrigger>
+        </div>
+
+        <CollapsibleContent className="pt-3 text-sm text-muted-foreground">
+          Taxes, support fees, and seat changes are included in this billing
+          period.
+        </CollapsibleContent>
+      </Collapsible>
+    </div>
+  )
+}
+
+function SettingsPreview({
+  defaultOpen = false,
+}: CollapsibleStoryArgs) {
+  const [open, setOpen] =
+    React.useState(defaultOpen)
+
+  return (
+    <Card
+      className="w-[420px]"
+      size="sm"
+    >
+      <CardHeader>
+        <CardTitle>
+          Radius
+        </CardTitle>
+
+        <CardDescription>
+          Set the corner radius of the element.
+        </CardDescription>
+      </CardHeader>
+
+      <CardContent>
+        <Collapsible
+          open={open}
+          onOpenChange={setOpen}
+          className="flex items-start gap-2"
+        >
+          <FieldGroup className="grid w-full grid-cols-2 gap-2">
+            <Field>
+              <FieldLabel className="sr-only">
+                Radius X
+              </FieldLabel>
+
+              <Input
+                placeholder="0"
+                defaultValue={0}
+              />
+            </Field>
+
+            <Field>
+              <FieldLabel className="sr-only">
+                Radius Y
+              </FieldLabel>
+
+              <Input
+                placeholder="0"
+                defaultValue={0}
+              />
+            </Field>
+
+            <CollapsibleContent className="col-span-full grid grid-cols-subgrid gap-2">
+              <Field>
+                <FieldLabel className="sr-only">
+                  Radius Top
+                </FieldLabel>
+
+                <Input
+                  placeholder="0"
+                  defaultValue={0}
+                />
+              </Field>
+
+              <Field>
+                <FieldLabel className="sr-only">
+                  Radius Bottom
+                </FieldLabel>
+
+                <Input
+                  placeholder="0"
+                  defaultValue={0}
+                />
+              </Field>
+            </CollapsibleContent>
+          </FieldGroup>
+
+          <CollapsibleTrigger asChild>
+            <Button
+              variant="outline"
+              size="icon"
+            >
+              {open ? (
+                <MinusIcon />
+              ) : (
+                <SquareIcon />
+              )}
+            </Button>
+          </CollapsibleTrigger>
+        </Collapsible>
+      </CardContent>
+    </Card>
+  )
+}
+
+function FileTreePreview({
+  defaultOpen = false,
+}: CollapsibleStoryArgs) {
+  const fileTree: FileTreeItem[] = [
+    {
+      name: "components",
+      items: [
+        {
+          name: "ui",
+          items: [
+            { name: "button.tsx" },
+            { name: "card.tsx" },
+            { name: "dialog.tsx" },
+          ],
+        },
+        { name: "login-form.tsx" },
+      ],
+    },
+    {
+      name: "lib",
+      items: [
+        { name: "utils.ts" },
+        { name: "api.ts" },
+      ],
+    },
+    { name: "package.json" },
+    { name: "README.md" },
+  ]
+
+  const renderItem = (
+    item: FileTreeItem,
+  ) => {
+    if ("items" in item) {
+      return (
+        <Collapsible
+          key={item.name}
+          defaultOpen={defaultOpen}
+        >
+          <CollapsibleTrigger asChild>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="group w-full justify-start px-2"
+            >
+              <CaretRightIcon className="transition-transform group-data-[state=open]:rotate-90" />
+
+              <FolderIcon />
+
+              {item.name}
+            </Button>
+          </CollapsibleTrigger>
+
+          <CollapsibleContent className="ml-5 mt-1 flex flex-col gap-1">
+            {item.items.map((child) =>
+              renderItem(child),
+            )}
+          </CollapsibleContent>
+        </Collapsible>
+      )
+    }
+
+    return (
+      <Button
+        key={item.name}
+        variant="link"
+        size="sm"
+        className="w-full justify-start gap-2 px-2 text-foreground"
+      >
+        <FileIcon />
+        {item.name}
+      </Button>
+    )
+  }
+
+  return (
+    <Card
+      className="w-[420px] gap-2"
+      size="sm"
+    >
+      <CardHeader>
+        <Tabs defaultValue="explorer">
+          <TabsList className="w-full">
+            <TabsTrigger value="explorer">
+              Explorer
+            </TabsTrigger>
+
+            <TabsTrigger value="outline">
+              Outline
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
+      </CardHeader>
+
+      <CardContent>
+        <div className="flex flex-col gap-1">
+          {fileTree.map((item) =>
+            renderItem(item),
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  )
 }
 
 const meta = {
-  title: "Orbit DS/Collapsible",
+  title: "Components/Collapsible",
+
   parameters: {
-    layout: "fullscreen",
+    layout: "centered",
+
     docs: {
       description: {
         component: `
-Use collapsibles for progressive disclosure, compact detail panels, advanced filters, and hide/show content inside larger layouts.
+Collapsible components progressively reveal or hide content.
 
-## Parameter Properties
+## Composition
 
-- \`open\`: Controls whether the collapsible content is expanded.
-- \`defaultOpen\`: Sets the initial expanded state for uncontrolled usage.
-- \`CollapsibleTrigger\`: Toggles the collapsible state.
-- \`CollapsibleContent\`: Holds the content that expands and collapses.
+\`\`\`text
+Collapsible
+|-- CollapsibleTrigger
+\`-- CollapsibleContent
+\`\`\`
+
+## Variants
+
+- Basic
+- Inline
+- Settings
+- File Tree
         `,
       },
     },
   },
-  decorators: [
-    (Story, context) => (
-      <div
-        className={[
-          "flex justify-center px-6",
-          context.viewMode === "docs"
-            ? "items-start py-6"
-            : "min-h-[70vh] items-center",
-        ].join(" ")}
-      >
-        <Story />
-      </div>
-    ),
-  ],
+
   tags: ["autodocs"],
+
   argTypes: {
-    state: {
-      control: "inline-radio",
-      options: ["inactive", "active"],
+    defaultOpen: {
+      control: "boolean",
       description:
-        "Controls whether the collapsible is closed or open.",
+        "Controls the initial expanded state.",
     },
   },
+
   args: {
-    state: "inactive",
+    defaultOpen: false,
   },
 } satisfies Meta<CollapsibleStoryArgs>
 
@@ -85,152 +357,25 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Basic: Story = {
-  args: {
-    state: "inactive",
-  },
-  render: ({ state = "inactive" }) => {
-    const open = state === "active"
-
-    return (
-      <Collapsible
-        open={open}
-        className="flex w-[350px] flex-col gap-2"
-      >
-        <div className="flex items-center justify-between gap-4 px-4">
-          <h4 className="text-sm font-semibold">
-            Order #4189
-          </h4>
-
-          <CollapsibleTrigger asChild>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="size-8"
-              aria-label="Toggle details"
-            >
-              <ChevronIcon open={open} />
-              <span className="sr-only">
-                Toggle details
-              </span>
-            </Button>
-          </CollapsibleTrigger>
-        </div>
-
-        <div className="flex items-center justify-between rounded-md border px-4 py-2 text-sm">
-          <span className="text-muted-foreground">
-            Status
-          </span>
-          <span className="font-medium">Shipped</span>
-        </div>
-
-        <CollapsibleContent className="flex flex-col gap-2">
-          <div className="rounded-md border px-4 py-2 text-sm">
-            <p className="font-medium">
-              Shipping address
-            </p>
-            <p className="text-muted-foreground">
-              100 Market St, San Francisco
-            </p>
-          </div>
-
-          <div className="rounded-md border px-4 py-2 text-sm">
-            <p className="font-medium">Items</p>
-            <p className="text-muted-foreground">
-              2x Studio Headphones
-            </p>
-          </div>
-        </CollapsibleContent>
-      </Collapsible>
-    )
-  },
-}
-
-export const DefaultOpen: Story = {
-  args: {
-    state: "active",
-  },
-  render: ({ state = "active" }) => (
-    <Collapsible
-      open={state === "active"}
-      className="flex w-[350px] flex-col gap-2"
-    >
-      <div className="flex items-center justify-between gap-4 px-4">
-        <h4 className="text-sm font-semibold">
-          Order #4189
-        </h4>
-
-        <CollapsibleTrigger asChild>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="size-8"
-            aria-label="Toggle details"
-          >
-            <ChevronIcon open={state === "active"} />
-            <span className="sr-only">
-              Toggle details
-            </span>
-          </Button>
-        </CollapsibleTrigger>
-      </div>
-
-      <div className="flex items-center justify-between rounded-md border px-4 py-2 text-sm">
-        <span className="text-muted-foreground">
-          Status
-        </span>
-        <span className="font-medium">Shipped</span>
-      </div>
-
-      <CollapsibleContent className="flex flex-col gap-2">
-        <div className="rounded-md border px-4 py-2 text-sm">
-          <p className="font-medium">
-            Shipping address
-          </p>
-          <p className="text-muted-foreground">
-            100 Market St, San Francisco
-          </p>
-        </div>
-
-        <div className="rounded-md border px-4 py-2 text-sm">
-          <p className="font-medium">Items</p>
-          <p className="text-muted-foreground">
-            2x Studio Headphones
-          </p>
-        </div>
-      </CollapsibleContent>
-    </Collapsible>
+  render: (args) => (
+    <BasicPreview {...args} />
   ),
 }
 
-export const InlineDetails: Story = {
-  args: {
-    state: "inactive",
-  },
-  render: ({ state = "inactive" }) => {
-    const open = state === "active"
+export const Inline: Story = {
+  render: (args) => (
+    <InlinePreview {...args} />
+  ),
+}
 
-    return (
-      <div className="max-w-md rounded-xl border p-4">
-        <div className="flex items-center justify-between gap-3">
-          <div>
-            <div className="font-medium">March invoice</div>
-            <div className="text-sm text-muted-foreground">
-              $2,480 due April 4
-            </div>
-          </div>
-          <Collapsible open={open}>
-            <CollapsibleTrigger asChild>
-              <Button variant="ghost" size="sm">
-                {open ? "Hide details" : "View details"}
-              </Button>
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-3 text-sm text-muted-foreground">
-              Taxes, support fees, and seat changes are included in this billing
-              period.
-            </CollapsibleContent>
-          </Collapsible>
-        </div>
-      </div>
-    )
-  },
+export const Settings: Story = {
+  render: (args) => (
+    <SettingsPreview {...args} />
+  ),
+}
+
+export const FileTree: Story = {
+  render: (args) => (
+    <FileTreePreview {...args} />
+  ),
 }

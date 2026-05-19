@@ -8,7 +8,7 @@ import {
 } from "@orbit-ds"
 
 const meta = {
-  title: "Orbit DS/Switch",
+  title: "Components/Switch",
   component: Switch,
   parameters: {
     layout: "centered",

@@ -15,12 +15,14 @@ import {
 function CheckboxPreview({
   checked = true,
   disabled = false,
+  invalid = false,
   label = "Email notifications",
   description,
   controlPlacement = "start",
 }: {
   checked?: boolean
   disabled?: boolean
+  invalid?: boolean
   label?: string
   description?: string
   controlPlacement?: "start" | "end"
@@ -29,9 +31,14 @@ function CheckboxPreview({
     <Field
       orientation="horizontal"
       data-disabled={disabled || undefined}
+      data-invalid={invalid || undefined}
       className={controlPlacement === "end" ? "flex-row-reverse" : undefined}
     >
-      <Checkbox checked={checked} disabled={disabled} />
+      <Checkbox
+        checked={checked}
+        disabled={disabled}
+        aria-invalid={invalid || undefined}
+      />
       <FieldContent>
         <FieldTitle>{label}</FieldTitle>
         {description ? (
@@ -43,10 +50,12 @@ function CheckboxPreview({
 }
 
 const meta = {
-  title: "Orbit DS/Checkbox",
+  title: "Components/Checkbox",
+
   component: CheckboxPreview,
+
   parameters: {
-    layout: "fullscreen",
+    layout: "centered",
     docs: {
       description: {
         component: `
@@ -79,6 +88,7 @@ Use checkboxes for binary choices, permission lists, consent prompts, and multi-
   argTypes: {
     checked: { control: "boolean" },
     disabled: { control: "boolean" },
+    invalid: { control: "boolean" },
     label: { control: "text" },
     description: { control: "text" },
     controlPlacement: {
@@ -89,6 +99,7 @@ Use checkboxes for binary choices, permission lists, consent prompts, and multi-
   args: {
     checked: true,
     disabled: false,
+    invalid: false,
     label: "Email notifications",
     description:
       "Receive release notes, approvals, and comment digests in your inbox.",
@@ -104,6 +115,7 @@ export const Basic: Story = {
   args: {
     label: "Accept terms and conditions",
     description: "",
+    controlPlacement: "end",
   },
   render: (args) => <CheckboxPreview {...args} />,
 }
@@ -130,6 +142,16 @@ export const Disabled: Story = {
   render: (args) => <CheckboxPreview {...args} />,
 }
 
+export const Invalid: Story = {
+  args: {
+    checked: false,
+    invalid: true,
+    label: "Accept publishing policy",
+    description: "You must confirm this policy before continuing.",
+  },
+  render: (args) => <CheckboxPreview {...args} />,
+}
+
 export const Indeterminate: Story = {
   render: () => {
     const [items, setItems] = React.useState({
@@ -147,9 +169,7 @@ export const Indeterminate: Story = {
         ? "indeterminate"
         : false
 
-    function handleSelectAll(
-      value: boolean | "indeterminate"
-    ) {
+    function handleSelectAll(value: boolean | "indeterminate") {
       const nextChecked = value === true
       setItems({
         comments: nextChecked,
@@ -187,9 +207,7 @@ export const Indeterminate: Story = {
                 }))
               }
             />
-            <FieldLabel htmlFor="project-comments">
-              Comments
-            </FieldLabel>
+            <FieldLabel htmlFor="project-comments">Comments</FieldLabel>
           </Field>
 
           <Field orientation="horizontal">
@@ -203,9 +221,7 @@ export const Indeterminate: Story = {
                 }))
               }
             />
-            <FieldLabel htmlFor="project-mentions">
-              Mentions
-            </FieldLabel>
+            <FieldLabel htmlFor="project-mentions">Mentions</FieldLabel>
           </Field>
 
           <Field orientation="horizontal">
@@ -219,9 +235,7 @@ export const Indeterminate: Story = {
                 }))
               }
             />
-            <FieldLabel htmlFor="project-updates">
-              Product updates
-            </FieldLabel>
+            <FieldLabel htmlFor="project-updates">Product updates</FieldLabel>
           </Field>
         </FieldSet>
       </FieldGroup>
@@ -230,20 +244,82 @@ export const Indeterminate: Story = {
 }
 
 export const Grouped: Story = {
-  render: () => (
+  args: {
+    controlPlacement: "start",
+  },
+  parameters: {
+    controls: {
+      include: ["controlPlacement"],
+    },
+  },
+  argTypes: {
+    checked: {
+      control: false,
+      table: {
+        disable: true,
+      },
+    },
+    disabled: {
+      control: false,
+      table: {
+        disable: true,
+      },
+    },
+    invalid: {
+      control: false,
+      table: {
+        disable: true,
+      },
+    },
+    label: {
+      control: false,
+      table: {
+        disable: true,
+      },
+    },
+    description: {
+      control: false,
+      table: {
+        disable: true,
+      },
+    },
+  },
+  render: ({ controlPlacement = "start" }) => (
     <FieldSet className="max-w-md">
-      <Field orientation="horizontal">
+      <Field
+        orientation="horizontal"
+        className={
+          controlPlacement === "end"
+            ? "flex-row-reverse"
+            : undefined
+        }
+      >
         <Checkbox id="comments" defaultChecked />
         <FieldLabel htmlFor="comments">Comments</FieldLabel>
       </Field>
-      <Field orientation="horizontal">
+      <Field
+        orientation="horizontal"
+        className={
+          controlPlacement === "end"
+            ? "flex-row-reverse"
+            : undefined
+        }
+      >
         <Checkbox id="mentions" defaultChecked />
         <FieldLabel htmlFor="mentions">Mentions</FieldLabel>
       </Field>
-      <Field orientation="horizontal">
+      <Field
+        orientation="horizontal"
+        className={
+          controlPlacement === "end"
+            ? "flex-row-reverse"
+            : undefined
+        }
+      >
         <Checkbox id="marketing" />
         <FieldLabel htmlFor="marketing">Product updates</FieldLabel>
       </Field>
     </FieldSet>
   ),
 }
+

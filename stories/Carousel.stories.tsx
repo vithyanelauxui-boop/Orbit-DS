@@ -37,13 +37,13 @@ function CarouselShell({
       orientation={orientation}
       className={orientation === "vertical" ? "mx-auto max-w-sm" : "mx-auto max-w-3xl"}
     >
-      <CarouselContent className={orientation === "vertical" ? "h-72 -mt-4" : "-ml-4"}>
+      <CarouselContent className={orientation === "vertical" ? "h-40 -mt-4" : "-ml-4"}>
         {slides.map((slide) => (
           <CarouselItem
             key={slide.title}
             className={orientation === "vertical" ? "pt-4" : "pl-4"}
           >
-            <Card className="h-full border">
+            <Card className="h-30 border">
               <CardContent className="flex h-full flex-col justify-center gap-2 py-10">
                 <div className="font-heading text-lg font-medium">{slide.title}</div>
                 <p className="text-sm text-muted-foreground">{slide.body}</p>
@@ -76,7 +76,7 @@ function MultiCarouselShell({
                 : "pl-4 md:basis-1/2 lg:basis-1/3"
             }
           >
-            <Card className="h-full border shadow-none">
+            <Card className="h-30 border shadow-none">
               <CardContent className="flex h-full flex-col justify-center gap-2 py-10">
                 <div className="font-heading text-lg font-medium">{slide.title}</div>
                 <p className="text-sm text-muted-foreground">{slide.body}</p>
@@ -92,10 +92,10 @@ function MultiCarouselShell({
 }
 
 const meta = {
-  title: "Orbit DS/Carousel",
+  title: "Components/Carousel",
   component: CarouselShell,
   parameters: {
-    layout: "fullscreen",
+    layout: "centered",
     docs: {
       description: {
         component: `

@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { useEffect, useState } from "react"
 
 import {
   Accordion,
@@ -56,18 +55,13 @@ function AccordionPreview({
   collapsible?: boolean
   className?: string
 }) {
-  const [singleValue, setSingleValue] =
-    useState<string>(openItem)
-  const [multipleValue, setMultipleValue] =
-    useState<string[]>(openItems)
-
-  useEffect(() => {
-    setSingleValue(openItem)
-  }, [openItem])
-
-  useEffect(() => {
-    setMultipleValue(openItems)
-  }, [openItems])
+  const storyKey = [
+    type,
+    openItem,
+    openItems.join(","),
+    disabled,
+    className ?? "",
+  ].join("|")
 
   const items = accordionItems.map((item, index) => (
     <AccordionItem
@@ -88,27 +82,31 @@ function AccordionPreview({
 
   if (type === "multiple") {
     return (
-      <Accordion
-        type="multiple"
-        value={multipleValue}
-        onValueChange={setMultipleValue}
-        className={cn("w-full max-w-2xl", className)}
-      >
-        {items}
-      </Accordion>
+      <div className="w-[48rem] max-w-full min-w-0">
+        <Accordion
+          key={storyKey}
+          type="multiple"
+          defaultValue={openItems}
+          className={cn("w-full min-w-0", className)}
+        >
+          {items}
+        </Accordion>
+      </div>
     )
   }
 
   return (
-    <Accordion
-      type="single"
-      collapsible={collapsible}
-      value={singleValue}
-      onValueChange={setSingleValue}
-      className={cn("w-full max-w-2xl", className)}
-    >
-      {items}
-    </Accordion>
+    <div className="w-[48rem] max-w-full min-w-0">
+      <Accordion
+        key={storyKey}
+        type="single"
+        collapsible={collapsible}
+        defaultValue={openItem}
+        className={cn("w-full min-w-0", className)}
+      >
+        {items}
+      </Accordion>
+    </div>
   )
 }
 
@@ -152,10 +150,10 @@ function VariantAccordion({
 }
 
 const meta = {
-  title: "Orbit DS/Accordion",
+  title: "Components/Accordion",
   component: AccordionPreview,
   parameters: {
-    layout: "fullscreen",
+    layout: "centered",
     docs: {
       description: {
         component: `
@@ -185,8 +183,9 @@ Accordion
   decorators: [
     (Story, context) => (
       <div
+        style={{ scrollbarGutter: "stable" }}
         className={cn(
-          "flex justify-center px-6",
+          "flex w-full justify-center px-6",
           context.viewMode === "docs"
             ? "items-start py-6"
             : "min-h-[70vh] items-center",
@@ -313,7 +312,7 @@ export const WithHeader: Story = {
     },
   },
   render: (args) => (
-    <div className="w-full max-w-2xl">
+    <div className="w-[48rem] max-w-full min-w-0">
       <div className="space-y-2 text-center">
         <p className="text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">
           Support

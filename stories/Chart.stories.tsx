@@ -148,7 +148,7 @@ function ChartEnhancements({
 }
 
 const meta = {
-  title: "Orbit DS/Chart",
+  title: "Components/Chart",
 
   args: {
     showGrid: true,
@@ -161,7 +161,7 @@ const meta = {
   },
 
   parameters: {
-    layout: "fullscreen",
+    layout: "centered",
 
     docs: {
       description: {

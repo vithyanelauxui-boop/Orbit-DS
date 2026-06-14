@@ -1,0 +1,10 @@
+{
+  "name": "orbit-ds-claude-skill",
+  "version": "1.0.0",
+  "description": "Claude Code skill for the Orbit Design System — pick components, tokens, and icons with AI assistance.",
+  "scripts": {
+    "install-skill": "node scripts/install.js"
+  },
+  "keywords": ["orbit-ds", "design-system", "claude", "claude-code", "skill"],
+  "license": "MIT"
+}

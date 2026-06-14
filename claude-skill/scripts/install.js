@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const os = require("os");
 
-const skillsDir = path.join(os.homedir(), ".claude", "skills");
+const skillsDir = path.join(os.homedir(), ".claude", "commands");
 const src = path.join(__dirname, "..", "..", ".claude", "skills", "orbit-ds.md");
 const dest = path.join(skillsDir, "orbit-ds.md");
 

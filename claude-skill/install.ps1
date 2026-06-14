@@ -1,7 +1,7 @@
 # Orbit DS Claude Skill Installer (Windows PowerShell)
 # Run: .\install.ps1
 
-$skillsDir = "$env:USERPROFILE\.claude\skills"
+$skillsDir = "$env:USERPROFILE\.claude\commands"
 $skillFile = "$skillsDir\orbit-ds.md"
 $sourceFile = "$PSScriptRoot\..\.claude\skills\orbit-ds.md"
 
